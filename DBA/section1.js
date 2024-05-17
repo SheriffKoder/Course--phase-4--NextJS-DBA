@@ -1,4 +1,6 @@
-
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+// Day 1 - Introduction 
 //Ex: output a string in reverse
 
 /*
@@ -52,7 +54,14 @@ console.log(reverse(st));
 */
 
 ////////////////////////////////////////////////////////////
-// Day2
+////////////////////////////////////////////////////////////
+// Day2 - Big O Notation - introduction
+
+// Big O: a way of having a measure to compare two versions of code for the same solution
+
+
+//// General exercises:
+
 // a function adds each number ontop of the number before
 
 
@@ -90,3 +99,97 @@ getTimePerformance(D2_2, 1000000000);
 // these are two solutions
 // function D2 scored 0s function D2_2 scored 17.47s for 1000000000
 
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+// Day3 - Big O Notation
+
+// measuring complexity according to execution time
+
+//O(n)
+function f3_1 (n) {
+    return (n+n+n+n);
+}
+
+
+//O(n^3)
+function f3_2 (n) {
+    return (n^2 + n^3);
+}
+
+
+//O(n)
+function logUpTo(n) {
+    for (var i = 1; i <= n; i++) {
+        console.log(i);
+    }
+}
+
+//O(n)
+function onlyElementsAtEvenIndex(array) {
+    var newArray = Array(Math.ceil(array.length / 2));
+    for (var i = 0; i < array.length; i++) {
+        if (i % 2 === 0) {
+            newArray[i / 2] = array[i];
+        }
+    }
+    return newArray;
+}
+
+
+//O(n^2)
+function subtotals(array) {
+    var subtotalArray = Array(array.length);
+    for (var i = 0; i < array.length; i++) {
+        var subtotal = 0;
+        for (var j = 0; j <= i; j++) {
+            subtotal += array[j];
+        }
+        subtotalArray[i] = subtotal;
+    }
+    return subtotalArray;
+}
+
+
+
+// measuring complexity according to space taken by inputs
+
+// O(1) as we will take 1 memory space each time
+function logUpTo(n) {
+    for (var i = 1; i <= n; i++) {
+        console.log(i);
+    }
+}
+
+
+function logAtMost10(n) {
+    for (var i = 1; i <= Math.min(n, 10); i++) {
+        console.log(i);
+    }
+}
+
+
+// O(n) as we will create at first an array of length n/2
+// then the variable storages are insignificant to the growing size of n reaching infinity
+function onlyElementsAtEvenIndex(array) {
+    var newArray = Array(Math.ceil(array.length / 2));
+    for (var i = 0; i < array.length; i++) {
+        if (i % 2 === 0) {
+            newArray[i / 2] = array[i];
+        }
+    }
+    return newArray;
+}
+
+// O(n) as we will create at first an array of length 
+// value1 created is in significant also and changes do not add to memory
+function subtotals(array) {
+    var subtotalArray = Array(array.length);    // define an array in memory
+    for (var i = 0; i < array.length; i++) {
+        var subtotal = 0;                   // define value1 in memory
+        for (var j = 0; j <= i; j++) {
+            subtotal += array[j];           // same value1 just changes, already defined in memory
+        }
+        subtotalArray[i] = subtotal;        // value changes, already defined in memory
+    }
+    return subtotalArray;
+}
