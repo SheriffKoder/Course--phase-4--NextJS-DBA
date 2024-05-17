@@ -1,17 +1,11 @@
 import Post from "./components/Post";
-
-
+import PostList from "./components/PostsList";
 
 function App() {
-    const body = "Check out the course"
 
   return (
-
-
     <main>
-      <Post name={""} body={body}/>
-      <Post name={""} body={body}/>
-
+      <PostList />
     </main>
 
   );

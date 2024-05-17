@@ -1,4 +1,6 @@
 
+import classes from "./Post.module.css"
+
 const names = ["max", "manuel"];
 
 
@@ -9,11 +11,10 @@ const Post = (props) => {
 
 
     return (
-        <div>
-            <p>{chosenName}</p>
-            <p>{props.body}</p>
-
-        </div>
+        <li className={classes.post}>
+            <p className={classes.author}>{props.author}</p>
+            <p className={classes.text}>{props.body}</p>
+        </li>
     );
 }
 
