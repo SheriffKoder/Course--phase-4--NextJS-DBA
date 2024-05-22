@@ -13,9 +13,15 @@ This repo contains my notes and code progress for the following courses:
 `react refresher`
 - project setup
 - using components
-- using css files
-- states and lifting state up
+- using css files file.module.css
+- states and passing/lifting state up
 
+-Show/Hide the NewPost form
+- show by clicking on the new post button in the header
+- hide by clicking on the cancel button in the form
+- wrap components using the 'children' prop name
+- show/hide components dynamically using states and functions
+- pass states and functions across multiple levels of components
 
 
 ## **Algorithms and Data Structures**
@@ -27,3 +33,7 @@ This repo contains my notes and code progress for the following courses:
 - comparing code with speed of execution
 - measuring time complexity
 - measuring space complexity (auxiliary)
+- Logarithms
+
+`Built-in Data-structures`
+- Objects
