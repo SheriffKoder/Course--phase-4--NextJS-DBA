@@ -1,6 +1,6 @@
 import classes from './NewPost.module.css';
 
-function NewPost(props) {
+function NewPost({onBodyChange, onAuthorChange, enteredBody, hideModalHandler}) {
 
 
 
@@ -8,14 +8,19 @@ function NewPost(props) {
     <form className={classes.form}>
       <p>
         <label htmlFor="body">Text</label>
-        <textarea id="body" required rows={3} onChange={props.onBodyChange}
+        <textarea id="body" required rows={3} onChange={onBodyChange}
         placeholder="Something here"/>
       </p>
-      <p>{props.enteredBody}</p>
+      <p>{enteredBody}</p>
       <p>
         <label htmlFor="name">Your name</label>
         <input type="text" id="name" required placeholder="Max"
-        onChange={props.onAuthorChange}/>
+        onChange={onAuthorChange}/>
+      </p>
+
+      <p className={classes.actions}>
+        <button type="button" onClick={hideModalHandler}>Cancel</button>
+        <button>Submit</button>                 {/*submit type button by default*/}
       </p>
     </form>
   );
