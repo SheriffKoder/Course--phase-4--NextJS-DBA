@@ -125,6 +125,8 @@ function logUpTo(n) {
 }
 
 //O(n)
+//time complexity increases with unknown (n) length
+//new array 0,1,2,3,4,5 = old array's 0,2,4,6,8,10 
 function onlyElementsAtEvenIndex(array) {
     var newArray = Array(Math.ceil(array.length / 2));
     for (var i = 0; i < array.length; i++) {
@@ -137,6 +139,7 @@ function onlyElementsAtEvenIndex(array) {
 
 
 //O(n^2)
+// because of nested loops
 function subtotals(array) {
     var subtotalArray = Array(array.length);
     for (var i = 0; i < array.length; i++) {
@@ -193,3 +196,27 @@ function subtotals(array) {
     }
     return subtotalArray;
 }
+
+
+
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+// Day4 - Logarithms
+
+// Objects
+
+// insertion - O(1)
+// removal - O(1)
+// searching - O(n)
+// access - O(1)
+
+let objectName = {
+    firstName: "Kelly",
+    instructor: true,
+    favoriteNumbers: [1,2,3,4]
+}
+
+console.log(Object.keys(objectName));           //O(n) ["firstName","instructor", "favoriteNumbers"]
+console.log(Object.values(objectName));         //O(n) ["Kelly", true, [1,2,3,4]]
+console.log(Object.entries(objectName));        //O(n) [["firstName", "Kelly"], .. etc]
+console.log(objectName.hasOwnProperty("firstName"));  //O(1)  true
