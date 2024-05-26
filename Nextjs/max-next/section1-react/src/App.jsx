@@ -13,7 +13,7 @@ import MainHeader from "./components/MainHeader";
 function App() {
 
    //28
-   const [ modalIsVisible, setModalIsVisible ] = useState(true);
+   const [ modalIsVisible, setModalIsVisible ] = useState(false);
 
    // instead of passing the setState, can pass this function and use onClick in the PostList>Modal component
    function hideModalHandler () {

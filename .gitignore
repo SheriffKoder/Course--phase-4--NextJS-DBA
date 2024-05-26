@@ -1,3 +1,6 @@
 *.env
-
 *contents.js
+*node_modules
+*/templates_layouts
+
+*/*/section1-njs

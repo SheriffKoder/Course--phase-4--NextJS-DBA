@@ -201,7 +201,7 @@ function subtotals(array) {
 
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
-// Day4 - Logarithms
+// Day4 - Built-in data-structures
 
 // Objects
 
@@ -220,3 +220,22 @@ console.log(Object.keys(objectName));           //O(n) ["firstName","instructor"
 console.log(Object.values(objectName));         //O(n) ["Kelly", true, [1,2,3,4]]
 console.log(Object.entries(objectName));        //O(n) [["firstName", "Kelly"], .. etc]
 console.log(objectName.hasOwnProperty("firstName"));  //O(1)  true
+
+////////////////////////////////////////////////////////////
+// Day5 - Built-in data-structures
+// arrays
+
+let str = "hii"; let result = {};
+
+for (let i=0; i<str.length; i++) {
+    let char = str[i];
+    console.log(result[char]);
+    if (result[char] > 0) {
+        result[char]++;
+    } else {
+        result[char] = 1;
+    }
+    
+}
+
+console.log(result);

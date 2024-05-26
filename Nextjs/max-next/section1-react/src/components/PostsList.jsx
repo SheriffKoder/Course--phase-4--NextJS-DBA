@@ -7,7 +7,7 @@ import Modal from './Modal'
 
 const body = "Check out the course";
 
-const PostList = ({modalIsVisible, setModalIsVisible, hideModalHandler}) => {
+const PostList = ({modalIsVisible, setModalIsVisible, }) => {
 
 
 
