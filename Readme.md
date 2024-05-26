@@ -54,3 +54,6 @@ This repo contains my notes and code progress for the following courses:
 - What is an algorithm and how to improve at solving algorithm
 - **Problem solving strategies**
 - (1) Understanding the problem
+- (2) exploring concrete examples
+- (3) Break it down
+- (4) Solve/Simplify
