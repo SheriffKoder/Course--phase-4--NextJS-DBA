@@ -33,6 +33,9 @@ This repo contains my notes and code progress for the following courses:
 - sending/storing postData to a backend-server (dummy-backend folder)
 - retrieving postData from a backend-server (dummy-backend folder)
 - handle fetching delays with an alternative UI using isFetching
+- **part3**
+- routing
+- routing: Layouts
 
 
 ## **Algorithms and Data Structures**
