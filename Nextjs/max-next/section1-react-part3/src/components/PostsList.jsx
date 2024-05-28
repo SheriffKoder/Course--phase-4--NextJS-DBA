@@ -1,36 +1,39 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Post from './Post'
 import classes from "./PostsList.module.css"
 import NewPost from '../routes/NewPost'
 import Modal from './Modal'
 
+import { useLoaderData } from 'react-router-dom'
 
 const body = "Check out the course";
 
 const PostList = ({modalIsVisible, setModalIsVisible, hideModalHandler}) => {
 
 
-  const [posts, setPosts] = useState([]);
+  const posts = useLoaderData();
+
+  // const [posts, setPosts] = useState([]);
 
   // loading
   // can use an alternative UI while isFetching is true
-  const [isFetching, setIsFetching] = useState(false);
+  // const [isFetching, setIsFetching] = useState(false);
 
   // will pass to children to allow them change the posts state
-  function addPostHandler (postData) {
+  // function addPostHandler (postData) {
 
-    // send postData to the backend for storage
-    fetch("http://localhost:8080/posts", {
-      method: "POST",
-      body: JSON.stringify(postData),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
+  //   // send postData to the backend for storage
+  //   // fetch("http://localhost:8080/posts", {
+  //   //   method: "POST",
+  //   //   body: JSON.stringify(postData),
+  //   //   headers: {
+  //   //     "Content-Type": "application/json"
+  //   //   }
+  //   // });
 
 
-    setPosts((existingPosts)=> [postData, ...existingPosts]);
-  }
+  //   setPosts((existingPosts)=> [postData, ...existingPosts]);
+  // }
 
   // React components should always return jsx so async is not supported on them by default
   // so a fetch GET, cant await but can use .then on it
@@ -41,24 +44,24 @@ const PostList = ({modalIsVisible, setModalIsVisible, hideModalHandler}) => {
   
   // async for the function instead of the useEffect itself becomes async
   // as we are not returning a promise from the function
-  useEffect(()=> {
+  // useEffect(()=> {
 
-      async function fetchPosts () {
-        setIsFetching(true);
-        // retrieve postData from the backend
-        const response = await fetch("http://localhost:8080/posts");
-        const resData = await response.json();
-        if (!response.ok) {
-          // if there is an error with the response
-          // do this
-        }
-        setPosts(resData.posts);
-        setIsFetching(false);
-      };
+  //     async function fetchPosts () {
+  //       setIsFetching(true);
+  //       // retrieve postData from the backend
+  //       // const response = await fetch("http://localhost:8080/posts");
+  //       // const resData = await response.json();
+  //       if (!response.ok) {
+  //         // if there is an error with the response
+  //         // do this
+  //       }
+  //       setPosts(resData.posts);
+  //       setIsFetching(false);
+  //     };
 
-      fetchPosts();
+  //     fetchPosts();
 
-  }, []);
+  // }, []);
 
 
 
@@ -76,26 +79,22 @@ const PostList = ({modalIsVisible, setModalIsVisible, hideModalHandler}) => {
       )} */}
 
       {/* if there are posts */}
-      {!isFetching && posts.length > 0 && (
+      {posts.length > 0 && (
         <ul className={classes.posts}>
         {posts.map((post)=> (
-          <Post key={post.body} author={post.author} body={post.body}/>
+          <Post key={post.id} id={post.id} author={post.author} body={post.body}/>
         ))}
         </ul>
       )}
 
-      {!isFetching && posts.length === 0 && (
+      {posts.length === 0 && (
         <div style={{textAlign: "center", color:"white"}}>
           <h2>There are no posts yet.</h2>
           <p>Start adding some!</p>
         </div>
       )}
 
-      {isFetching &&
-        <div style={{textAlign: "center", color:"white"}}>
-          <p>Loading posts...</p>
-        </div>
-      }
+     
 
 
     </>
