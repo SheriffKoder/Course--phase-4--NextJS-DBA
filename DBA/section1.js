@@ -225,17 +225,96 @@ console.log(objectName.hasOwnProperty("firstName"));  //O(1)  true
 // Day5 - Built-in data-structures
 // arrays
 
-let str = "hii"; let result = {};
+// Arrays: n's because the whole index map will need to be updated
+// Insertion - first O(n) / last O(1)
+// Removal   - first O(n) / last O(1)
+// Searching - O(n)
+// Access    - O(1)
+// merge - O(n) - concact()
+// copy - O(n) - slice(start, end+1)
+// trans replace/insert - O(n)  - splice(position, number of replacements) if not at the end then O(n)
+// sort - O(N*logN)
+// forEach/map/filter/reduce/etc. - O(n)
 
-for (let i=0; i<str.length; i++) {
-    let char = str[i];
-    console.log(result[char]);
-    if (result[char] > 0) {
-        result[char]++;
-    } else {
-        result[char] = 1;
-    }
+
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+// problem solving strategies
+/*
+// 1. understand the problem        - analyze
+// 2. explore concrete examples     - draft
+// 3. break it down
+// 4. solve/simplify
+// 5. look back and refactor
+
+//1 understand the problem
+words, [inputs/outputs], clues?
+a) can you restate the problem in your own words
+b) what are the inputs that go into the problem ?
+c) what are the outputs that should come from the solution to the problem ?
+c) can the outputs be determined from the inputs ? do i have enough information to solve the problem ?
+d) what are the things that really matter in that problem
+
+//2 explore concrete examples
+ask yourself, what if
+a) start with simple examples, easiest use cases - small input w/output
+b) process to more complex examples              - large real world input ex. charCount("hello")  // {h: 1, e: 1, l:2, o:1}
+c) explore examples with empty inputs            - different empty types
+d) explore examples with invalid inputs          - different invalids
+
+//3 break it down, show a process, game plan
+take the actual steps of the problem and write them down in comments with communicating through
+then fill the comments with code, 
+
+//4 solve/simplify
+code in what you know then work/collaborate on what you do not know yet
+0) take it step by step to make sure the code works or needs re-adjustment
+a) Find the core difficulty in what you are trying to do
+b) Temporarily ignore that difficulty
+c) Write a simplified solution then work your way up
+d) Incorporate that difficulty back in
+
+//5 look back and refactor
+a) can you check the result ? does it work ?
+b) can you derive the result differently ? can you write it differently ?
+c) can you understand it at a glance ?
+d) can you use the result or method for some "other problem" ? maybe you are facing
+e) can you "improve the performance" of your solution ? in terms of complexity for example
+f) can you think of other ways to "refactor and make it more neat?"
+g) how have other people solved this problem ? what other approaches out there and learn
+(good for being better)
+
+
+*/
+
+function same_draft (arr1, arr2) {
     
+    // it will be something like that..
+    // arr1 and arr2 have to have lengths > 0
+        // arr1 and arr2 have to have same lengths
+
+            // loop over arr1[i]
+                // we have arr1[i]
+                // if arr1[i] is not a number return false
+                // loop over arr2[j]
+                    // if arr2[j] is not a number return false
+                    // if arr2[j] === arr1[i] * arr1[i]
+                    // remove arr2[j] from arr[2]
+                    // if we reached the end and no result return false
+
+            // arr1/arr2 success, if arr2.length > 0 return false
+
 }
 
-console.log(result);
+
+
+function same (arr1, arr2) {
+    
+   //try it step by step to re-adjust
+}
+
+
+let array1 = [1,2,3];
+let array2 = [9,4,1];
+
+// console.log(same(array1, array2));
