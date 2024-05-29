@@ -60,3 +60,8 @@ This repo contains my notes and code progress for the following courses:
 - (2) exploring concrete examples
 - (3) Break it down
 - (4) Solve/Simplify
+- (5) look back and refactor
+- **Master common problem solving patterns**
+- Example: Frequency counter
+
+
