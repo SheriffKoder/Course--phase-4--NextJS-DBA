@@ -287,6 +287,14 @@ g) how have other people solved this problem ? what other approaches out there a
 
 */
 
+//// Problem solving Exercise 1: Frequency counter / same
+// accepts two arrays
+// return true if every value in the array has it's corresponding value
+// squared in the second array.
+// the frequency of values must be the same
+// the order does not have to match
+// however. freq means that for each value in arr1 to have its corresponding in arr2
+// no more no less
 function same_draft (arr1, arr2) {
     
     // it will be something like that..
@@ -300,6 +308,7 @@ function same_draft (arr1, arr2) {
                     // if arr2[j] is not a number return false
                     // if arr2[j] === arr1[i] * arr1[i]
                     // remove arr2[j] from arr[2]
+                    // Added: go out from this j loop
                     // if we reached the end and no result return false
 
             // arr1/arr2 success, if arr2.length > 0 return false
@@ -307,14 +316,111 @@ function same_draft (arr1, arr2) {
 }
 
 
-
-function same (arr1, arr2) {
+// Time complexity O(n^2) because of nested loops
+// Space complexity O(n) because of splice
+// answer is correct
+// but consider using arr2.indexOf(arr[i] ** 2) which returns -1/1
+function my_same (arr1, arr2) {
     
-   //try it step by step to re-adjust
+    //try it step by step to re-adjust
+
+    // arr1 and arr2 have to have lengths > 0
+    if (arr1.length < 1 && arr2.length < 1) return false;
+
+    // arr1 and arr2 have to have same lengths
+    if (arr1.length !== arr2.length) return false;
+
+    // loop over arr1[i]
+    for (let i=0; i<arr1.length; i++) {
+
+        // if arr1[i] is not a number return false
+        if (isNaN(arr1[i])) return false;
+
+            // loop over arr2[j] i.e arr1[i] and arr2[0,1,2..]
+            for (let j=0; j<arr2.length; j++) {
+
+                // if arr2[j] is not a number return false
+                if (isNaN(arr2[j])) return false;
+
+                // if arr2[j] === arr1[i] * arr1[i]
+                // remove arr2[j] from arr[2]
+                // Added: go out from this j loop
+                if (arr2[j] === arr1[i] * arr1[i]) {
+                    arr2.splice(j, 1);
+                    break;
+
+                // if we reached the end and still not equal return false
+                } else if (j === arr2.length-1 && arr2[j] !== arr1[i] * arr1[i]) {
+                        return false;
+                }
+            }
+        }
+
+        // if reached here then success
+        return true;
+
+
+
 }
 
+// lecture's refactored solution
+// time complexity of O(3n)=O(n) better than O(n) previously as we separated the loops
+function lec_same (arr1, arr2) {
+    if (arr1.length !== arr2.length) {
+        return false;
+    }
+    
+    let frequencyCounter1 = {};
+    let frequencyCounter2 = {};
 
-let array1 = [1,2,3];
-let array2 = [9,4,1];
+    //FC will be {1: 1, 2:1, 3:2} etc
+    // store the numbers as keys with their quantity
+    // if there are there increase by 1
+    for (let val of arr1) {
+        frequencyCounter1[val] = (frequencyCounter1[val] || 0) + 1;
+    }
+
+    for (let val of arr2) {
+        frequencyCounter2[val] = (frequencyCounter2[val] || 0) + 1;
+    }
+
+    for (let key in frequencyCounter1) {
+        // check on powered occurrence
+        if (!(key ** 2 in frequencyCounter2 )) {
+            return false;
+        }
+        // else if occurred, check on quantity match
+        if (frequencyCounter2[key ** 2] !== frequencyCounter1[key]) {
+            return false;
+        }
+    }
+    return true;
+    
+
+}
+
+let array1 = [1,2,4];
+let array2 = [16,4,1];
 
 // console.log(same(array1, array2));
+
+
+//// Problem solving Exercise 2: Anagram
+
+function validAnagram(string1, string2) {
+
+    // check the length of both strings if are equal
+    // if is not a string return false
+    // if can be converted to a number convert
+    console.log(string1[0]);
+    console.log(!isNaN(string1));
+
+
+
+
+}
+
+let st1 = null;
+let st2 = "ba"
+
+validAnagram(st1, st2);
