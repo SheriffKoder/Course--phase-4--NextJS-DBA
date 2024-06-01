@@ -36,6 +36,8 @@ This repo contains my notes and code progress for the following courses:
 - **part3**
 - routing
 - routing: Layouts
+- Navigating using: Link, useNavigate, redirect
+- routing: Layouts: using loader/action properties to handle GET/POST requests instead of using a useEffect
 
 
 ## **Algorithms and Data Structures**
