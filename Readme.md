@@ -12,7 +12,7 @@ This repo contains my notes and code progress for the following courses:
 - App router vs. Pages router
 
 `react refresher`
-- **part 1**
+- **section1-react-part 1**
 - project setup
 - using components
 - using css files file.module.css
@@ -25,7 +25,7 @@ This repo contains my notes and code progress for the following courses:
 - show/hide components dynamically using states and functions
 - pass states and functions across multiple levels of components
 ######
-- **part2**
+- **section1-react-part2**
 -  change: moving states to the newPost component
 - formSubmit function updates postData and sends the input values to parent state with a passed function from the parent
 - if there are posts display the Post component
@@ -33,7 +33,7 @@ This repo contains my notes and code progress for the following courses:
 - sending/storing postData to a backend-server (dummy-backend folder)
 - retrieving postData from a backend-server (dummy-backend folder)
 - handle fetching delays with an alternative UI using isFetching
-- **part3**
+- **section1-react-part3**
 - routing
 - routing: Layouts
 - Navigating using: Link, useNavigate, redirect
@@ -65,5 +65,6 @@ This repo contains my notes and code progress for the following courses:
 - (5) look back and refactor
 - **Master common problem solving patterns**
 - Example: Frequency counter / Same
+- Example: Frequency counter / Anagram
 
 

@@ -406,21 +406,80 @@ let array2 = [16,4,1];
 
 
 //// Problem solving Exercise 2: Anagram
+// a function that returns true if both strings contains the same characters
+// even if un-ordered or have signs
 
-function validAnagram(string1, string2) {
+// 45
+function ObjectFromChars (string) {
+    // create an empty object
+    let obj = {};
+    
+    // loop over string and add each of its chars in a separate key in this object 
+    for (key of string) {
+        obj[key.charCodeAt(0)] ? obj[key.charCodeAt(0)]++ : obj[key.charCodeAt(0)] =1;
+    }
 
-    // check the length of both strings if are equal
-    // if is not a string return false
-    // if can be converted to a number convert
-    console.log(string1[0]);
-    console.log(!isNaN(string1));
+    // return object
+    return obj;
+}
 
+// time complexity (4n+9) ~ n
+// constant 9
+// n, 4
+// space complexity 3n
+// constant
+// n, 3
+function validAnagram(str1, str2) {
 
+    // check if a string is null/undefined, or both do not have the same lengths
+    // if (!str1 || !str2) return false;
+    if (str1.length !== str2.length) return false;
 
+    // have two objects, each with the quantity of chars in ASCII code
+    let obj1 = ObjectFromChars(str1);
+    let obj2 = ObjectFromChars(str2);
+  
+    // compare each char in the opposite string against quantity
+    let keys = Object.keys(obj1)
+    for (let key of keys) {
+        if (obj1[key] !== obj2[key]) return false; 
+    }
+    // console.log(keys);
+
+    return true;
 
 }
 
-let st1 = null;
-let st2 = "ba"
+let st1 = "abb";
+let st2 = "baa";
 
-validAnagram(st1, st2);
+// lecture answer, less complexity by 2n by decrementing n instead of comparing n against object n
+function validAnagram2(str1, str2) {
+
+    // check if a string is null/undefined, or both do not have the same lengths
+    // if (!str1 || !str2) return false;
+    if (str1.length !== str2.length) return false;
+
+    // have two objects, each with the quantity of chars in ASCII code
+    let obj1 = ObjectFromChars(str1);
+    // let obj2 = ObjectFromChars(str2);
+    console.log(obj1);
+  
+    // compare each char in the opposite string against quantity
+    for (key in str2) {
+        let letter = str2[key].charCodeAt(0);
+        // console.log(letter);
+        // if the quantity in str1 has been decreased to 0, 
+        // 0 is falsey, so will return false
+        if (!obj1[letter]) {
+            return false;
+        } else {
+            obj1[letter] -= 1;
+        }
+    }
+
+    return true;
+
+}
+
+console.log(validAnagram2(st1, st2));
