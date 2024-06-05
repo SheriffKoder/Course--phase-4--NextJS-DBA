@@ -39,6 +39,17 @@ This repo contains my notes and code progress for the following courses:
 - Navigating using: Link, useNavigate, redirect
 - routing: Layouts: using loader/action properties to handle GET/POST requests instead of using a useEffect
 
+`Foodies project`
+- **section3-njs-foodies-starting-project**
+- Action: Work on the root page, layout header, nested route pages
+- Dynamic pages: create meals/share, community routes
+- Style the nav and nav background
+- Work on the root page.js
+- Nested layouts & the children prop
+- Import Images as variables
+- Styling using the module.css files
+- Link and Image Next.js elements
+
 
 ## **Algorithms and Data Structures**
 
