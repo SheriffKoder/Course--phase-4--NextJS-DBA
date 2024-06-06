@@ -10,6 +10,12 @@ export async function getMeals () {
     // arbitrary delay simulation
     await new Promise((resolve)=> setTimeout(resolve, 2000));
 
+    // throw new Error("Loading meals failed");
     return db.prepare("SELECT * FROM meals").all();    
     // run() if inserting, all() if fetching, fetching all rows, or get() if fetching a single row
+}
+
+export function getMeal(slug) {
+    // add dynamic values in statement for security
+    return db.prepare("SELECT * FROM meals WHERE slug = ?").get(slug);
 }

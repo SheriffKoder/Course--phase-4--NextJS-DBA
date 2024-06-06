@@ -48,22 +48,3 @@ const MealsPage = () => {
 }
 
 export default MealsPage
-
-/*
-
-Work on the image-slideshow, community, meals components and create/fetch from a sql-lite database
-- @components/images/image-slideshow component add code
-- @app/community page add content
-- @app/meals page add content
-- react server and client components
-- use the code that uses client side code into separate components
-- use usePathname hook to determine current urls to activate buttons
-- Database:
-- work with sql-lite database from 'initdb.js' to create a database file 'meals.db'
-- fetch data using @lib/meals.js using async on the @app/meals page
-- loading UI and Suspense
-
-
-
-
-*/
