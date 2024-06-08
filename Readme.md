@@ -59,8 +59,14 @@ This repo contains my notes and code progress for the following courses:
 - Use usePathname hook to determine current urls to activate buttons
 - **Action: Create/fetch from a sql-lite database**
 - Work with sql-lite database from 'initdb.js' to create a database file 'meals.db'
-- Fetch data using @lib/meals.js using async on the @app/meals page
+- Fetch data using @lib/meals.js using async on the @app/meals page and @app/meals/[mealSlug] that uses the params object to send the mealId to fetch with
 - Loading.js UI and Suspense
+ >**section3-njs-foodies-starting-project-part2**
+- **Action: Work on the @meals/share page to gather form input values and an image**
+- Use an image-picker component to display and alternative image-picker button and display the uploaded image on the UI
+- Gather the submitted form data in the formData format in a server function
+
+
 
 ## **Algorithms and Data Structures**
 
