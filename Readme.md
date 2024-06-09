@@ -65,7 +65,12 @@ This repo contains my notes and code progress for the following courses:
 - **Action: Work on the @meals/share page to gather form input values and an image**
 - Use an image-picker component to display and alternative image-picker button and display the uploaded image on the UI
 - Gather the submitted form data in the formData format in a server function
-
+- **Action: Save the image and meal data to the database using the saveMeal function in @lib/meals.js**
+- Use the 'slugify' package to generate a slug/id based on the title
+- Use the 'xss' package to protect against cross site scripting attacks as we are outputting HTML content of meal.instructions in @mealSlug 
+- Use the filesystem API to o be able to save the image with the name we generated
+- Write meal data to the database
+- Use the useFormStatus hook to indicate the form submit status on the submit button in @meals/share page
 
 
 ## **Algorithms and Data Structures**
