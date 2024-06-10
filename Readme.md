@@ -71,6 +71,8 @@ This repo contains my notes and code progress for the following courses:
 - Use the filesystem API to o be able to save the image with the name we generated
 - Write meal data to the database
 - Use the useFormStatus hook to indicate the form submit status on the submit button in @meals/share page
+- Add server side input validation and related display errors
+- Production mode: Update cache by revalidating pages to display new added content using revalidatePath()
 
 
 ## **Algorithms and Data Structures**
