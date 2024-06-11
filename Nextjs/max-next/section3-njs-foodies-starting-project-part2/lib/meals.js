@@ -9,7 +9,11 @@ import xss from "xss";
 
 import fs from "node:fs";
 
+import { S3 } from "@aws-sdk/client-s3";
 
+const s3 = new S3({
+    region: 'eu-north-1'
+  });
 
 const db = sql("meals.db");
 
@@ -46,6 +50,8 @@ export async function saveMeal (meal) {
     // generate file name, can add a random text beside it too for uniqueness
     const fileName = `${meal.slug}.${extension}`;
 
+    // storing an image locally
+    /*
     // write data to a certain file
     // requires a path to the file you are writing
     // returns a stream object which you can use to write to that path
@@ -66,6 +72,19 @@ export async function saveMeal (meal) {
     // using the newly created path for the new file
     // remove the /public as all front-end requests will use the public folder by default
     meal.image = `/images/${fileName}`;
+   */
+  
+    // storing an image with AWS S3
+    const bufferedImage = await meal.image.arrayBuffer();
+
+    s3.putObject({
+        Bucket: 'shkd-aws-foodies-demo',
+        Key: fileName,
+        Body: Buffer.from(bufferedImage),
+        ContentType: meal.image.type,
+      });
+    meal.image = fileName;
+
 
     // save to the database
     // insert some data into the meals table
