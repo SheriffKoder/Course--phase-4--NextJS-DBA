@@ -73,7 +73,8 @@ This repo contains my notes and code progress for the following courses:
 - Use the useFormStatus hook to indicate the form submit status on the submit button in @meals/share page
 - Add server side input validation and related display errors
 - Production mode: Update cache by revalidating pages to display new added content using revalidatePath()
-
+- Store and fetch images using AWS S3
+- Metadata root, sub-page
 
 ## **Algorithms and Data Structures**
 
