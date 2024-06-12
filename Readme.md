@@ -74,7 +74,8 @@ This repo contains my notes and code progress for the following courses:
 - Add server side input validation and related display errors
 - Production mode: Update cache by revalidating pages to display new added content using revalidatePath()
 - Store and fetch images using AWS S3
-- Metadata root, sub-page
+- Metadata root, sub-layout (@meals), Dynamic metadata for dynamic pages [mealSlug]'s page.js
+
 
 ## **Algorithms and Data Structures**
 

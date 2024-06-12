@@ -5,6 +5,25 @@ import Image from 'next/image'
 import { getMeal } from '@/lib/meals'
 import { notFound } from 'next/navigation'
 
+
+export async function generateMetadata ({params}) {
+  const meal = getMeal(params.mealSlug);
+
+  // show the closest not found or error page in case meal not found (in database)
+  // and will make generating the metadata fail
+  // put before trying to access the meal variable
+  if (!meal) {
+    notFound();
+  }
+
+  return {
+    title: meal.title,
+    description: meal.summary
+  };
+}
+
+
+
 const MealDetailsPage = ({params}) => {
 
   //getMeals find a meal document that has this id of mealSlug in the url
