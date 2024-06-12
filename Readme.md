@@ -77,6 +77,11 @@ This repo contains my notes and code progress for the following courses:
 - Metadata root, sub-layout (@meals), Dynamic metadata for dynamic pages [mealSlug]'s page.js
 
 
+## **`NextNews Project`** 
+ >**section4-njs-nextnews-part1**
+- Dynamic pages: @/news/[slug] displays dynamic content based on the slug value from an imported object with not-found check for a not-found UI
+
+
 ## **Algorithms and Data Structures**
 
 
