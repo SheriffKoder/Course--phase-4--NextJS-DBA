@@ -6,7 +6,9 @@ import MealsGrid from '@/components/meals/meals-grid'
 import { getMeals } from '@/lib/meals'
 
 async function Meals () {
-    const meals = await getMeals();
+    let meals = await getMeals();
+    meals = meals.filter((meal)=> meal.title !== "Cappuccino");
+    meals.reverse();
 
     return <MealsGrid meals={meals}/>
   }
@@ -23,7 +25,7 @@ const MealsPage = () => {
         <h1>
           Delicious meals, created 
           <span className={classes.highlight}>
-          by you
+          {" "}by you
           </span>
         </h1>
         <p>

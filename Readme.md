@@ -79,8 +79,11 @@ This repo contains my notes and code progress for the following courses:
 
 ## **`NextNews Project`** 
  >**section4-njs-nextnews-part1**
-- Dynamic pages: @/news/[slug] displays dynamic content based on the slug value from an imported object with not-found check for a not-found UI
-
+- **Dynamic pages:** @/news/[slug] displays dynamic content based on the slug value from an imported object with not-found check for a not-found UI
+- Add /archive page which uses @archive/@latest "parallel routes" to display 
+two separate contents on the same page even with sub-dynamic pages
+- Use "catch-all" routes to display news cards depending on the year/month dynamic values in the url
+while @latest display the same latest news cards
 
 ## **Algorithms and Data Structures**
 

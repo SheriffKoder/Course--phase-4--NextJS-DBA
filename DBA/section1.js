@@ -405,7 +405,7 @@ let array2 = [16,4,1];
 // console.log(same(array1, array2));
 
 
-//// Problem solving Exercise 2: Anagram
+//// Problem solving Exercise 2: Frequency counter / Anagram
 // a function that returns true if both strings contains the same characters
 // even if un-ordered or have signs
 
@@ -482,4 +482,5 @@ function validAnagram2(str1, str2) {
 
 }
 
-console.log(validAnagram2(st1, st2));
+// console.log(validAnagram2(st1, st2));
+

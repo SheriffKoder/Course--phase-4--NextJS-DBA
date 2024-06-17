@@ -4,3 +4,10 @@
 */templates_layouts
 
 */*/section1-njs
+
+# next.js
+*.next
+*out
+
+# production
+*build
