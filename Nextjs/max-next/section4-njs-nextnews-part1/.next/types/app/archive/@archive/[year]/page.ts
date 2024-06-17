@@ -1,8 +1,8 @@
-// File: /home/sheriffkoder/Desktop/git/phase-4/Nextjs/max-next/section4-njs-nextnews-part1/app/news/[slug]/page.js
-import * as entry from '../../../../../app/news/[slug]/page.js'
+// File: /home/sheriffkoder/Desktop/git/phase-4/Nextjs/max-next/section4-njs-nextnews-part1/app/archive/@archive/[year]/page.js
+import * as entry from '../../../../../../app/archive/@archive/[year]/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
-type TEntry = typeof import('../../../../../app/news/[slug]/page.js')
+type TEntry = typeof import('../../../../../../app/archive/@archive/[year]/page.js')
 
 // Check that the entry is a valid entry
 checkFields<Diff<{
