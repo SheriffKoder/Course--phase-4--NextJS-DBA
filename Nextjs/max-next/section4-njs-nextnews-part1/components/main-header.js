@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import React from 'react'
+import NavLink from './nav-link'
 
 const MainHeader = () => {
+
   return (
     <header id="main-header">
         
@@ -12,7 +14,11 @@ const MainHeader = () => {
         <nav>
             <ul>
                 <li>
-                    <Link href="/news">News</Link>
+                    {/* client component outsource to a client component to use usePathname */}
+                    <NavLink subPath={"news"}>News</NavLink>
+                </li>
+                <li>
+                    <NavLink subPath={"archive"}>Archive</NavLink>
                 </li>
             </ul>
         </nav>
