@@ -84,6 +84,13 @@ This repo contains my notes and code progress for the following courses:
 two separate contents on the same page even with sub-dynamic pages
 - Use "catch-all" routes to display news cards depending on the year/month dynamic values in the url
 while @latest display the same latest news cards
+- client components cont. error client components
+- intercepting route (.) or (..) to display a specific page when internally redirecting
+- useRouter() hook
+- route groups
+- basic app/api/route.js
+- /middleware.js to control all/some of the website's requests
+
 
 ## **Algorithms and Data Structures**
 
