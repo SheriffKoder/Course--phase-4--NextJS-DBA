@@ -1,27 +1,65 @@
 import NewsList from '@/components/news-list'
 import { getAvailableNewsMonths, getAvailableNewsYears, getNewsForYear, getNewsForYearAndMonth } from '@/lib/news';
-import React from 'react'
+import React, { Suspense } from 'react'
 import Link from 'next/link';
 
-const FilteredNewsPage = ({params}) => {
-    const filter = params.filter;
-    // const news = getNewsForYear(newsYear);
-    const selectedYear = filter?.[0];   // first element in the url after /archive
-    const selectedMonth = filter?.[1];   // first element in the url after /archive/year
-    
-    let news;
-    let  links = getAvailableNewsYears();
+
+
+async function FilterHeader ({year, month}) {
+
+
+
+    const availableYears = await getAvailableNewsYears();
+    let  links = availableYears;
+
+
+    // get an error if entered url is out of our boundaries
+    if (
+        (year && !availableYears.includes(year)) ||
+    (month && 
+        !getAvailableNewsMonths(year).includes(month))
+    ) {
+        throw new Error("Invalid filter.");
+    }
+
     
     // year and no month
-    if (selectedYear && !selectedMonth) {
-        news = getNewsForYear(selectedYear);
-        links = getAvailableNewsMonths(selectedYear);
+    if (year && !month) {
+
+        links = getAvailableNewsMonths(year);
     }
 
     // year and month
-    if (selectedYear && selectedMonth) {
-        news = getNewsForYearAndMonth(selectedYear,selectedMonth);
+    if (year && month) {
         links = [];
+    }
+
+    return (
+        <header id="archive-header">
+            <nav>
+                <ul>
+                    {links.map(link => {
+
+                    const href = year ?  `/archive/${year}/${link}` : `/archive/${link}`;
+
+                    return <li key={link}>
+                        <Link href={href}>{link}</Link>
+                    </li>}
+                    )}
+                </ul>
+            </nav>
+        </header>
+    );
+}
+
+
+// async data fetching for the news to wrap the news cards in a suspense boundary
+async function FilteredNews({year, month}) {
+    let news;
+    if (year && !month) {
+        news = await getNewsForYear(year);
+    } else if (year && month) {
+        news = await getNewsForYearAndMonth(year, month);
     }
 
     let newsContent = <p>No news found for the selected period.</p>
@@ -30,32 +68,37 @@ const FilteredNewsPage = ({params}) => {
         newsContent = <NewsList news={news} />
     }
 
-    // get an error if entered url is out of our boundaries
-    if (selectedYear && !getAvailableNewsYears().includes(+selectedYear) ||
-    selectedMonth && !getAvailableNewsMonths().includes(+selectedMonth)
-    ) {
-        throw new Error("Invalid filter.");
-    }
+    return newsContent;
+
+}
+
+
+
+const FilteredNewsPage = async ({params}) => {
+    const filter = params.filter;
+    // const news = getNewsForYear(newsYear);
+    const selectedYear = filter?.[0];   // first element in the url after /archive
+    const selectedMonth = filter?.[1];   // first element in the url after /archive/year
+    
+    
+
+
+
+
+
 
 
     
     return (
         <>
-        <header id="archive-header">
-        <nav>
-            <ul>
-                {links.map(link => {
-
-                const href = selectedYear ?  `/archive/${selectedYear}/${link}` : `/archive/${link}`;
-
-                return <li key={link}>
-                    <Link href={href}>{link}</Link>
-                </li>}
-                )}
-            </ul>
-        </nav>
-    </header>
-    {newsContent}
+        <Suspense fallback={<p>Loading filtered months...</p>}>
+            <FilterHeader year={selectedYear} month={selectedMonth}/>
+        </Suspense>
+        
+        <Suspense fallback={<p>Loading filtered news...</p>}>
+            <FilteredNews year={selectedYear} month={selectedMonth} />
+        </Suspense>
+        
     </>
     )
 }

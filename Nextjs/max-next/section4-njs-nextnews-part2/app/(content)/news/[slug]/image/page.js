@@ -1,11 +1,11 @@
 import React from 'react'
 import { notFound } from 'next/navigation';
-import { DUMMY_NEWS } from '@/dummy-news';
+import { getNewsItem } from '@/lib/news';
 
 
-const ImagePage = ({params}) => {
+const ImagePage = async ({params}) => {
     const newsItemSlug = params.slug;
-    const newsItem = DUMMY_NEWS.find(newsItem => newsItem.slug === newsItemSlug);
+    const newsItem = await getNewsItem(newsItemSlug);
 
     if (!newsItem) {
       notFound();
