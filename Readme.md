@@ -90,7 +90,11 @@ while @latest display the same latest news cards
 - route groups
 - basic app/api/route.js
 - /middleware.js to control all/some of the website's requests
-
+ >**section4-njs-nextnews-part1**
+- convert the component into RSC by using the modal-backdrop that uses useRouter hook from an external client component instead of transforming the whole RSC component to a client component
+- fetching data using useEffect then RSC component with fetch then RSC component using a function fetching from a local database using sqlite
+- RSC components fetching using async/await
+- parallel routes loading UI's while fetching async values in RSC components
 
 ## **Algorithms and Data Structures**
 
