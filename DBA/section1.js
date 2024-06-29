@@ -51,6 +51,30 @@ return arr;
 
 console.log(reverse(st));
 
+// another solution
+const string_a = "ab1c";
+// we want to out put it as cba
+
+// what could be the first step ?
+// out put the string
+
+// console.log(string_a[0]);
+// we have 0,1,2
+// what if we used 2,1,0
+// the length is 3
+
+function reverseString2 (string) {
+    let result = "";
+    // this will iterate three times, 2,1,0
+    for (i=string_a.length-1; i>=0; i--) {
+        result = result+string_a[i];
+        // console.log(string_a[i]);
+    }
+    return result;
+}
+
+console.log(reverseString2(string_a));
+
 */
 
 ////////////////////////////////////////////////////////////
@@ -76,6 +100,20 @@ function D2 (finalNumber2) {
 // you got the result, can you make the code shorter ?
 // how to get 5050 from 100
 
+// what is the corelation between 100 and 5050
+// 2 would be 3
+// 3 would be 6
+// 4 would be 10
+// 5 would be 15
+// 6 would be 21
+// 7 would be 28
+// 8
+
+// 5x6 = 30 / 2
+// where 6 is n+1
+
+// this is simpler and without loops
+// console.log(n*(n+1)/2);
 
 function D2_2 (finalNumber2_2) {
     return (finalNumber2_2 *(finalNumber2_2+1) /2);
@@ -89,8 +127,8 @@ function getTimePerformance(incomingFunction, incomingInput) {
     const result = incomingFunction(incomingInput);
     
     const t2_2 = performance.now();
-    console.log(`time elapsed: ${(t2_2-t2)/1000} seconds`);
-    console.log(result);
+    // console.log(`time elapsed: ${(t2_2-t2)/1000} seconds`);
+    // console.log(result);
 }
 
 getTimePerformance(D2_2, 1000000000);
@@ -105,9 +143,9 @@ getTimePerformance(D2_2, 1000000000);
 
 // measuring complexity according to execution time
 
-//O(n)
-function f3_1 (n) {
-    return (n+n+n+n);
+//O(4)
+function f3_1 (number) {
+    return (number+number+number+number);
 }
 
 
@@ -163,7 +201,6 @@ function logUpTo(n) {
     }
 }
 
-
 function logAtMost10(n) {
     for (var i = 1; i <= Math.min(n, 10); i++) {
         console.log(i);
@@ -216,10 +253,10 @@ let objectName = {
     favoriteNumbers: [1,2,3,4]
 }
 
-console.log(Object.keys(objectName));           //O(n) ["firstName","instructor", "favoriteNumbers"]
-console.log(Object.values(objectName));         //O(n) ["Kelly", true, [1,2,3,4]]
-console.log(Object.entries(objectName));        //O(n) [["firstName", "Kelly"], .. etc]
-console.log(objectName.hasOwnProperty("firstName"));  //O(1)  true
+// console.log(Object.keys(objectName));           //O(n) ["firstName","instructor", "favoriteNumbers"]
+// console.log(Object.values(objectName));         //O(n) ["Kelly", true, [1,2,3,4]]
+// console.log(Object.entries(objectName));        //O(n) [["firstName", "Kelly"], .. etc]
+// console.log(objectName.hasOwnProperty("firstName"));  //O(1)  true
 
 ////////////////////////////////////////////////////////////
 // Day5 - Built-in data-structures
@@ -295,7 +332,7 @@ g) how have other people solved this problem ? what other approaches out there a
 // the order does not have to match
 // however. freq means that for each value in arr1 to have its corresponding in arr2
 // no more no less
-function same_draft (arr1, arr2) {
+function FrequencyCounter_draft (arr1, arr2) {
     
     // it will be something like that..
     // arr1 and arr2 have to have lengths > 0
@@ -320,7 +357,7 @@ function same_draft (arr1, arr2) {
 // Space complexity O(n) because of splice
 // answer is correct
 // but consider using arr2.indexOf(arr[i] ** 2) which returns -1/1
-function my_same (arr1, arr2) {
+function FrequencyCounter_my (arr1, arr2) {
     
     //try it step by step to re-adjust
 
@@ -365,7 +402,7 @@ function my_same (arr1, arr2) {
 
 // lecture's refactored solution
 // time complexity of O(3n)=O(n) better than O(n) previously as we separated the loops
-function lec_same (arr1, arr2) {
+function FrequencyCounter_lec (arr1, arr2) {
     if (arr1.length !== arr2.length) {
         return false;
     }
@@ -399,10 +436,10 @@ function lec_same (arr1, arr2) {
 
 }
 
-let array1 = [1,2,4];
-let array2 = [16,4,1];
+// let array1 = [1,2,4];
+// let array2 = [16,4,1];
 
-// console.log(same(array1, array2));
+// console.log(FrequencyCounter_lec(array1, array2));
 
 
 //// Problem solving Exercise 2: Frequency counter / Anagram
@@ -451,7 +488,7 @@ function validAnagram(str1, str2) {
 }
 
 let st1 = "abb";
-let st2 = "baa";
+let st2 = "bba";
 
 // lecture answer, less complexity by 2n by decrementing n instead of comparing n against object n
 function validAnagram2(str1, str2) {
@@ -483,4 +520,35 @@ function validAnagram2(str1, str2) {
 }
 
 // console.log(validAnagram2(st1, st2));
+
+
+// EX output stars
+/*
+const myNumber = 4;
+
+function outputStar(n) {
+    let myString = "";
+    for (i=0; i<n; i++) {
+        myString=myString+"*";
+    }
+    console.log(myString);
+}
+
+// outputStar(2);
+
+
+// incrementing
+for (i=1; i<=myNumber; i++ ) {
+    // console.log("row "+i);
+    outputStar(i);
+}
+
+// decrementing
+for (j=myNumber-1; j>=1; j-- ) {
+    // console.log("row2 "+j);
+    outputStar(j);
+}
+*/
+
+
 
