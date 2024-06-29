@@ -324,7 +324,8 @@ g) how have other people solved this problem ? what other approaches out there a
 
 */
 
-//// Problem solving Exercise 1: Frequency counter / same
+//// Problem solving Concept 1: Frequency counter / same
+/*
 // accepts two arrays
 // return true if every value in the array has it's corresponding value
 // squared in the second array.
@@ -520,6 +521,8 @@ function validAnagram2(str1, str2) {
 }
 
 // console.log(validAnagram2(st1, st2));
+*/
+
 
 
 // EX output stars
@@ -552,3 +555,80 @@ for (j=myNumber-1; j>=1; j-- ) {
 
 
 
+//// Problem solving Concept 1: Multiple pointers / sumZero
+// sumZero
+/**/
+function sumZero_me (arr) {
+    
+    // check if a string or an array with small length of a number
+    if (typeof(arr) === "string" || 
+    (typeof(arr) === "object" && arr.length < 2) ||
+    arr.length === undefined
+    ) {
+        return undefined
+    }
+
+    // nested method time: O(n^2)
+    // for (i=0; i<arr.length; i++) {
+    //     for (j=arr.length-1; j > i; j--) {
+            //also can use (j=i+1; j<arr.length; j++)
+    //         // console.log(arr[j]);
+    //         if (arr[i]+arr[j] === 0) {return [arr[i],arr[j],i,j]}
+    //         // else keep decrementing till i
+    //     }    
+    //     if (i === arr.length-1) {return undefined};
+    // }
+
+    // how can we avoid nested loops time: O(n), 
+    // space: O(n) because we write an object --
+    // without the location array and return
+    //we can place it in an object for i
+    let obj = {};
+    for (val in arr) {
+        //store value:location/index
+        obj[arr[val]] ? obj[arr[val]].push(val) : obj[arr[val]] = [val];
+    }
+
+    // console.log(obj);
+
+    for (val in obj) {
+        // find in the object if there is an inverse key, not 0 as 0*-1 will be 0 and not display our numbers
+        if (obj[val] && obj[val*-1] && val !=0) {
+            // console.log(val+" "+(val*-1));
+            // return the numbers and their corresponding locations in the array
+            return {
+                [val]:obj[val],
+                [val*-1]:obj[(val*-1)]
+            };
+        }
+    }
+
+
+
+}
+
+
+// console.log(sumZero_me([-2,0,2,2]));
+
+// the lecturer wants an actual sorted numbers
+// time: O(n)
+// but this is better because has space  complexity of O(1) !
+function sumZero_lec(arr) {
+    //starting points
+    let left=0;
+    let right = arr.length - 1;
+
+    while (left < right) {  // not = to avoid 0's
+        let sum = arr[left] + arr[right];
+        if (sum === 0) {
+            return [arr[left], arr[right]];
+        }
+        else if (sum > 0) {
+            right--;
+        } else {
+            left++;
+        }
+    }
+}
+
+console.log(sumZero_lec([-2,0,2,2]));
