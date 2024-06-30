@@ -555,7 +555,7 @@ for (j=myNumber-1; j>=1; j-- ) {
 
 
 
-//// Problem solving Concept 1: Multiple pointers / sumZero
+//// Problem solving Concept 2: Multiple pointers / sumZero
 // sumZero
 /**/
 function sumZero_me (arr) {
@@ -631,4 +631,48 @@ function sumZero_lec(arr) {
     }
 }
 
-console.log(sumZero_lec([-2,0,2,2]));
+// console.log(sumZero_lec([-2,0,2,2]));
+
+
+//// Problem solving Concept 2: Multiple pointers / countUniqueValues
+
+// time complexity O(n)
+// space complexity: 1
+function countUniqueValues (arr) {
+
+    // initial check
+    if (arr.length === 0) return 0;
+    
+    //starting point
+    let pointerI = 0;
+    // let pointerJ = 1;
+
+
+    // move j across the array, starting from its position
+    for (let j=1; j<arr.length; j++) {
+        // as we are moving, check on j's values
+        // if value of j is different from value of i
+        // move i by 1 and put the value of j in value of i
+        if (arr[j] !== arr[pointerI]) {
+            pointerI = pointerI + 1;
+            arr[pointerI] = arr[j];
+        }
+        // else (values are equal).. keep incrementing j to continue comparing
+    }
+
+    // i+1 would be the length of how many unique numbers
+    return pointerI+1;
+
+}
+
+
+// console.log(countUniqueValues([1,1,1,2,3,3,4,4,5,6]));
+// 1,2,3,4,,6,4,4,5,6
+
+
+function longestUnique (arr) {
+
+}
+
+console.log(longestUnique('hellothere'));
+
