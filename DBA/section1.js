@@ -557,7 +557,7 @@ for (j=myNumber-1; j>=1; j-- ) {
 
 //// Problem solving Concept 2: Multiple pointers / sumZero
 // sumZero
-/**/
+/*
 function sumZero_me (arr) {
     
     // check if a string or an array with small length of a number
@@ -633,9 +633,11 @@ function sumZero_lec(arr) {
 
 // console.log(sumZero_lec([-2,0,2,2]));
 
+*/
+
 
 //// Problem solving Concept 2: Multiple pointers / countUniqueValues
-
+/*
 // time complexity O(n)
 // space complexity: 1
 function countUniqueValues (arr) {
@@ -668,11 +670,93 @@ function countUniqueValues (arr) {
 
 // console.log(countUniqueValues([1,1,1,2,3,3,4,4,5,6]));
 // 1,2,3,4,,6,4,4,5,6
+*/
 
 
-function longestUnique (arr) {
+//// Problem solving Concept 3: Sliding windows / maxSubarraySum
+// which accepts an array of integers and a number (n)
+// calculate the highest sum elements beside each other in n width in that array
+function maxSubarraySum_me (arr, n) {
+
+    let result = 0;
+
+    for (i=n-1; i<arr.length; i++) {    //i = 2 //i = 3
+        let temp = 0;
+        let window = (i-n+1);                
+                                            
+        for (j=i; j>=(window); j--) {       // temp = arr[2]+arr[1]+arr[0]
+            temp += arr[j];                 // temp = arr[3]+arr[2]+arr[1]
+
+            if (temp > result) result = temp;
+
+        }
+        console.log(temp);
+    }
+
+    return result;
 
 }
 
-console.log(longestUnique('hellothere'));
+// console.log(maxSubarraySum_me([1,2,3,4],2)); //7
 
+// lecturer's answer
+function maxSubarraySum_lec (arr, n) {
+
+    if (n > arr.length) return null;
+
+    let result = -Infinity; // as 0 will not help when adding numbers and -ve to take in consideration -ve sums
+
+    // given n=3
+    // i=0, till 4-3+1 2, i++ ... 0,1,2, and stop before the end by n
+    for (let i=0; i<arr.length - n + 1; i++ ) {
+    // for (i=n-1; i<arr.length; i++) {    //i = 2 //i = 3
+        let temp = 0;        
+        // j 0,1,2
+        for (let j = 0; j<n; j++) {
+            // at i=0, arr index = 0,1,2
+            // at i=1   arr index = 1,2,3
+            temp += arr[i+j];
+
+            if (temp > result) result = temp;
+
+        }
+    }
+
+    return result;
+
+}
+
+// console.log(maxSubarraySum_lec([1,2,3,4],3)); //7
+
+// better example because we are using time complexity of O(n)
+function maxSubarraySum_lec_refactored (arr, num) {
+    let maxSum = 0;
+    let tempSum = 0;
+
+    if (arr.length < num) return null;
+
+    // this will add the first three numbers and put aside
+    for (let i = 0; i < num; i++) {
+        maxSum += arr[i];
+    }
+
+    tempSum = maxSum;
+
+    // () now take the number last in the selection of n
+    // / add to it the previous add
+    // [] remove the first index of the previous add
+    // now we have the quantity of the needed indexes exactly
+    // [0 1 2] 3 > maxSum
+    // [0]/ 1/ 2/ (3)
+    // then increase i for the next iteration
+    // i.e overlap your movement then add the new index and remove the old index
+    for (let i = num; i < arr.length; i++ ) {
+        // at i=3, tempSum = prev - arr[3-3] + arr[3]
+        tempSum = tempSum - arr[ i - num ] + arr[i];
+        maxSum = Math.max(maxSum,tempSum);
+    }
+
+    return maxSum;
+}
+
+console.log(maxSubarraySum_lec_refactored([2,6,9,2,1,8,5,6,3], 3)); //19
