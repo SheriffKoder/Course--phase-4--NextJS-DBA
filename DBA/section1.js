@@ -674,6 +674,7 @@ function countUniqueValues (arr) {
 
 
 //// Problem solving Concept 3: Sliding windows / maxSubarraySum
+/*
 // which accepts an array of integers and a number (n)
 // calculate the highest sum elements beside each other in n width in that array
 function maxSubarraySum_me (arr, n) {
@@ -760,3 +761,172 @@ function maxSubarraySum_lec_refactored (arr, num) {
 }
 
 console.log(maxSubarraySum_lec_refactored([2,6,9,2,1,8,5,6,3], 3)); //19
+
+*/
+
+
+//// Problem solving Concept 4: Divide and conquer / search (binary search)
+/*
+
+function findIndex1 (array, n) {
+
+    let arr = [...array];
+
+    let middle = Math.floor((arr.length)/2);
+    let start = 0;
+    let end = arr.length-1;
+
+    // from the start - see if it is in the start or end of the array
+    if (arr[start] === n) { return start }
+    if (arr[end] === n) { return end }
+    if (arr[start] > n || arr[end] < n) {return -1;}
+
+    for (let i=0; i<middle; i++) {
+
+
+
+        // if it is somewhere in between, check which side
+        // and keep iterating (dividing the numbers) as we do not return here to break the loop
+        if (n > arr[middle]) {
+            start = middle;
+            end = arr.length-1;
+            middle = middle+Math.floor((end-start)/2);
+            console.log(start,middle,end);
+        }
+    
+        if (n < arr[middle]) {
+            start = 0;
+            end = middle;
+            middle = Math.floor((end-start)/2);
+            console.log(start,middle,end);
+        }
+
+        // if it is in the middle then it is found
+        if (n === arr[middle]) {
+            return middle;
+            
+        }
+
+    }
+
+    if (n !== middle) return -1;
+
+
+    // start = 1
+    // end = 3
+    // repeat this again 
+    // as long as n !== middle
+    //  2, can be 2
+
+
+
+}
+
+// time complexity O(logN)
+function findIndex (array, val) {
+
+    let min = 0;
+    let max = array.length-1;
+
+    while (min <= max) {
+        let middle = Math.floor((min + max) /2);
+        let currentElement = array[middle];
+
+        if (array[middle] < val) {
+            min = middle+1;
+            console.log("if");
+        }
+        else if (array[middle] > val) {
+            max = middle-1;
+            console.log("else if");
+        }
+        else {
+            return middle;
+        }
+    }
+
+}
+
+
+console.log(findIndex([1,2,3,4,5,6,7,8,9,11,12,13,14,15,17], 10));
+                     // 0   1     2   3   4   5     6
+
+
+
+
+*/
+
+
+
+// Assignment on previous concepts: #1
+/*
+function sameFrequency (n1, n2) {
+
+    // convert to a string to use indexes
+    let st1 = n1.toString();
+    let st2 = n2.toString();
+    if (st1.length !== st2.length) return false;
+
+    let obj1 = {};
+    let obj2 = {};
+
+    for (let val of st1 ) {
+        obj1[val] = (obj1[val] || 0) +1;
+    }
+
+    for (let val of st2 ) {
+        obj2[val] = (obj2[val] || 0) +1;
+        if (obj2[val] > obj1[val]) return false;
+        if (!obj1[val]) return false;
+    }
+
+    console.log(obj1);
+    console.log(obj2);
+
+    return true;
+
+}
+
+console.log(sameFrequency(3589578, 5879385)); // true)
+*/
+
+// Assignment on previous concepts: #2
+/*
+// areThereDuplicates(1, 2, 3) // false
+// areThereDuplicates(1, 2, 2) // true 
+// areThereDuplicates('a', 'b', 'c', 'a') // true 
+// bonus: time complexity O(nlogn), space O(1)
+// O(nlogn) by conditionally quitting the loop, O(1) by not storing any arrays
+function areThereDuplicates (...props) {
+
+    let pointer = 0;
+    let i = pointer+1;
+    
+    // keep looping while pointer is not the last in the array.
+    while (pointer < props.length ) {
+    // console.log(props[pointer], props[i]);
+
+        // check each index in vs. the current pointer value
+        if (props[i] === props[pointer]) { return true }
+        // increment after each
+        i++;
+
+        // if we got to the last item in the array, nothing to compare anymore
+        // move+1 in pointer, and set i to the index right after it
+        if (i === props.length) {
+            pointer++;
+            i=pointer+1;
+        }
+        // ending statement pointer is at the end and we still have not found a duplicate
+        // can be above to save a comparison+assignment
+        if (pointer === props.length-1) {
+            return false;
+        }
+    }
+}
+
+
+console.log(areThereDuplicates(1,2,2));
+
+*/
+
