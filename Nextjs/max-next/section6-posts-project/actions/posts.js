@@ -49,6 +49,7 @@ import { redirect } from 'next/navigation';
       userId: 1
     })
 
+    revalidatePath("/", "layout");
     redirect("/feed");
   }
 
