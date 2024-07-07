@@ -930,3 +930,168 @@ console.log(areThereDuplicates(1,2,2));
 
 */
 
+// Assignment on previous concepts: #3
+/*
+// averagePair. Given a sorted array of integers and a target average, 
+// determine if there is a pair of values in the array where the average 
+// of the pair equals the target average. There may be more than one pair 
+// that matches the average target.
+
+// Bonus Constraints: Time: O(N) Space: O(1)
+// Sample Input:
+// averagePair([1,2,3],2.5) // true
+// averagePair([1,3,3,5,6,7,10,12,19],8) // true
+// averagePair([-1,0,3,4,5,6], 4.1) // false
+// averagePair([],4) // false
+
+function averagePair (arr, average) {
+
+    if (arr.length === 0) return false;
+
+    let pointerI = 0;
+    let j = pointerI+1;
+    let key = 0;
+
+    while (pointerI < arr.length-1 && key < 100) {
+        console.log(pointerI, j);
+        
+        if ((arr[pointerI]+arr[j])/2 === average) return true;
+        j++;
+
+        if (j === arr.length) {
+            pointerI=pointerI+1;
+            j=pointerI+1;
+        }
+
+        
+        key++;
+
+    }
+
+    return false;
+
+}
+
+console.log(averagePair([],4));
+*/
+
+// Assignment on previous concepts: #4
+/*
+function isSubsequence (st1, st2) {
+
+    let i = 0;
+    for (let j=0; j<st2.length; j++) {
+        // console.log(st1[i], st2[j]);
+        if (st2[j] === st1[i]) {
+            i++;
+            if (i === st1.length) return true;
+        }
+    }
+    // console.log("finished and i is", i);
+    if (i !== st1.length) return false;
+}
+
+console.log(isSubsequence('abc', 'acb'));
+*/
+
+// Assignment on previous concepts: #5
+/*
+// Given an array of integers and a number, 
+// write a function called maxSubarraySum, 
+// which finds the maximum sum of a subarray 
+// with the length of the number passed to the function.
+// and must be consecutive
+// maxSubarraySum([100,200,300,400], 2) // 700
+// maxSubarraySum([1,4,2,10,23,3,1,0,20], 4)  // 39 
+// maxSubarraySum([-3,4,0,-2,6,-1], 2) // 5
+// maxSubarraySum([3,-2,7,-4,1,-1,4,-2,1],2) // 5
+// maxSubarraySum([2,3], 3) // null
+// Time Complexity - O(N)
+// Space Complexity - O(1)
+
+function maxSubarraySum (arr, num) {
+
+    if (!num || num > arr.length) return null;
+
+    let maxSum = 0;
+
+    for (let i = 0; i < num; i++) {
+        maxSum = maxSum+arr[i];
+    }
+
+    let temp = maxSum;
+    for (let j = 0; j < arr.length; j++ ) {
+        console.log(arr[j+num], maxSum, arr[j]);
+        temp = arr[j+num]+temp-arr[j];
+        console.log(temp);
+        if (temp > maxSum) maxSum = temp;
+    }
+    return maxSum;
+
+}
+
+console.log(maxSubarraySum([1,4,2,10,23,3,1,0,20], 4));
+
+*/
+
+// Assignment on previous concepts: #6
+/*
+// accepts an array and a number
+// returns the minimal length of a contiguous sub array
+// of sum greater than or equal the number passed to the function
+// return 0 if no sum width is greater than or equal the number
+
+function minSubArrayLen (arr, num) {
+
+    let temp = 0;
+    let i = 0;
+    let start = 0;
+    let track = 0;
+    let length = Infinity;
+
+    let key = 0;
+
+    while (i < arr.length && key < 100) {
+
+        console.log("..", i,track,temp);
+        temp = temp+arr[i]; //0
+        
+        if (temp < num) { //1,2,3
+            i++;
+            track++;
+        }
+        
+        if (temp >= num) {
+            console.log(temp);
+            if (track < length) length = track;
+            track = 1;
+            start++;
+            i=start;
+            temp = 0;
+            console.log(">=", length, track, start);
+        }
+
+        if (track === arr.length-1 && temp < num) {
+            return 0;
+        }
+        key++;
+    }
+
+    return length;
+
+
+
+
+}
+
+
+console.log(minSubArrayLen([1,4,16,22,5,7,8,9,10],200));
+*/
+
+// Assignment on previous concepts: #7
+/*
+
+
+
+*/
+
