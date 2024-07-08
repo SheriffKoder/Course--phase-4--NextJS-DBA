@@ -96,6 +96,14 @@ while @latest display the same latest news cards
 - RSC components fetching using async/await
 - parallel routes loading UI's while fetching async values in RSC components
 
+
+## **`Posts Project`*
+>**section6-posts-project**
+- @app/new-post/page.js uses @components/post-form.js uses useFormState to display input validation errors on the component (client component hook)
+- which uses @components/form-submit button uses useFormState to display pending if the form submit is in progress (client component hook)
+- and the submit server action component at @actions/posts.js is the function responsible for handling the post submission, receiving form inputs passed from the useFormState, checks them, returns error messages, store images to the cloudinary api, then stores the post in the sql-lite database and redirects the page
+- use the useOptimistic hook to invert the like status of the post and the like button style and return the updated posts, this functionality is triggered by the like button itself with the help of .bind method
+
 ## **Algorithms and Data Structures**
 
 
@@ -120,7 +128,15 @@ while @latest display the same latest news cards
 - (4) Solve/Simplify
 - (5) look back and refactor
 - **Master common problem solving patterns**
-- Example: Frequency counter / Same
-- Example: Frequency counter / Anagram
-
-
+- Concrete Examples concept 1 : Frequency counter / Same
+- Concrete Examples concept 1 : Frequency counter / Anagram
+- Concrete Examples concept 2 : Multiple pointers / sumZero
+- Concrete Examples concept 2 : Multiple pointers / countUniqueValues
+- Concrete Examples concept 3 : Sliding windows / maxSubarraySum
+- Concrete Examples concept 4: Divide and conquer / search (binary search)
+- Assignment on previous concepts: #1 Frequency counter / sameFrequency
+- Assignment on previous concepts: #2 Multiple pointers / areThereDuplicates
+- Assignment on previous concepts: #3 multiple pointers averagePair
+- Assignment on previous concepts: #4 isSubsequence
+- Assignment on previous concepts: #5 maxSubarraySum
+- Assignment on previous concepts: #6 window sliders / minSubArrayLen
