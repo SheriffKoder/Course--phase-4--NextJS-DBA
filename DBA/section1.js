@@ -1091,7 +1091,212 @@ console.log(minSubArrayLen([1,4,16,22,5,7,8,9,10],200));
 // Assignment on previous concepts: #7
 /*
 
+findLongestSubstring('') // 0
+findLongestSubstring('rithmschool') // 7
+findLongestSubstring('thisisawesome') // 6
+findLongestSubstring('thecatinthehat') // 7
+findLongestSubstring('bbbbbb') // 1
+findLongestSubstring('longestsubstring') // 8
+findLongestSubstring('thisishowwedoit') // 6
+
+
+0   1   2   3   4   5   6   7   8   9   10
+r   i   t   h   m   s   c   h   o   o   l
+
+while searchIndex < length -1
+stop at 3 match at 7
+start from 7, 
+stop at 8 match at 9
+
+function findLongestSubstring(str){
+
+    let searchIndex = 0;    // current held index we are comparing other indexes to
+    let searchPointer = searchIndex+1;  // starting index for other elements in the array loop getting compared to searchIndex
+
+    let match = str.length-1;   // if we found a match, will store it here, to update the search loop to make this the search end
+    let length = 0; // value describing the length from a start value to a match window end
+    let WindowStart = 0;  // the start of the window, 0 initially and set to the new window start when we find a match window and finish searching within it
+
+    let key = 0;    // to avoid while-loop infinite looping
+
+    // check the whole array if there is a match for search index
+
+    while (searchIndex < str.length-1 && searchPointer < str.length &&  key < 200) {
+
+        console.log(str[searchIndex], str[searchPointer]);
+        key++;
+
+        //we have searchIndex of 0
+        // check all search pointers
+        if (str[searchPointer] === str[searchIndex]) {
+            // if we iterated and found a 2nd match etc.
+            // compare against previous match, change match if it came first
+            
+            // the unique string length is from the window start till the found match
+            let newLength = searchPointer-searchIndex;
+
+            // if the new length is greater than the previous length update the previous length tracking value
+            if (length < newLength) {
+                length = newLength;
+            }
+            // 
+            if (match > searchPointer) {
+                match = searchPointer;
+            }
+            console.log("our window start", WindowStart, "match found at", searchPointer,"for ", searchIndex, "window length", newLength, "will keep length of ", length);
+            // once found a match and did what we want, move to the following index and pointer
+            searchIndex++;
+            searchPointer = searchIndex+1;
+        
+
+        // keep iterating anyway to find new matches
+        } else if (searchPointer < match) {
+            searchPointer++;
+        // if we got to the end of the match window and searched for matches with in it
+        // move to the following index
+        }  else if (searchPointer === match-1) {
+            searchIndex++;
+            searchPointer= searchIndex+1;
+        // got to the end of the array or match window
+        } else {
+            console.log("switching", "match", match);
+            
+            // got to the end of the array or match window 
+            // and the match index was not cleared or initial (i.e match found already)
+            // update the window start, so we start measuring length from the next window
+            // which will be right after the match or searchPointer++
+            if (match !== str.length-1) WindowStart = match;
+
+            // clear the match index (looking for a new index)
+            match = str.length-1;
+            // move to the following index
+            searchIndex++;
+            searchPointer= searchIndex+1;
+            console.log("////", str.slice(WindowStart));
+        }
+
+
+
+    }
+
+    return length;
+
+
+
+}
+
+
+
+console.log(findLongestSubstring("thisisawesome"));
+*/
+
+// Assignment on previous concepts: #7 - solution
+/*
+function findLongestSubstring(str) {
+    let longest = 0;
+    let seen = {};
+    let start = 0;
+   
+    for (let i = 0; i < str.length; i++) {
+      let char = str[i];
+      if (seen[char]) {
+        start = Math.max(start, seen[char]);
+      }
+      // index - beginning of substring + 1 (to include current in count)
+      longest = Math.max(longest, i - start + 1);
+      // store the index of the next char so as to not double count
+      seen[char] = i + 1;
+    }
+    return longest;
+  }
+
+console.log(findLongestSubstring('thisisawesome')); // 7
 
 
 */
+
+
+/////////////////////////////////////////////////////////////////////////
+
+
+// Recursive functions : example 1
+/*
+function countDown (num) {
+    if (num <= 0) {
+        console.log("All done!");
+        return;
+    }
+    console.log(num);
+    num--;
+    countDown(num);
+}
+
+countDown(5);
+
+*/
+
+// Recursive functions : example 2 - returning
+/*
+// 3, execute, repeat, collect other than functions
+// return 3 + sumRange(2);
+//              2 + sumRange(1);
+//                      1
+
+function sumRange (num) {
+    if (num === 1) return 1;    //base case ?
+    return num + sumRange(num-1);               //
+}
+
+console.log(sumRange(3));
+
+*/
+
+
+// Recursive functions : example 3 - factorial
+/*
+// factorial of 4 which is written as 4!
+// is 4 * 3 * 2 * 1
+function factorial (num) {
+
+    if (num === 1) return 1;    // end / base case
+    
+    return num * factorial(num -1); // changed input
+
+}
+
+console.log(factorial(4));
+*/
+
+
+// Recursive functions : example 4 - helper method recursion pattern
+/*
+
+// a function that contains another function that is recursive (calls itself)
+
+function collectOddValues (arr) {
+
+    let result = [];
+
+    function helper(helperInput) {
+        if (helper.incomingInput.length === 0) return;
+
+        if (helperInput[0] & 2 !== 0) {     // if odd
+            result.push(helperInput[0]);    // put into result
+        }
+
+        // now remove it, also remove it if its even
+        // and repeat adding/removing
+        helper(helperInput.slice[1]);
+
+    }
+
+    helper(arr);
+
+    return result;
+
+}
+
+
+*/
+
 
