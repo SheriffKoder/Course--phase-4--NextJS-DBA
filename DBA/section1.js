@@ -1268,7 +1268,7 @@ console.log(factorial(4));
 */
 
 
-// Recursive functions : example 4 - helper method recursion pattern
+// Recursive functions : example 4 - Helper recursion pattern - collectOddValues
 /*
 
 // a function that contains another function that is recursive (calls itself)
@@ -1280,7 +1280,7 @@ function collectOddValues (arr) {
     function helper(helperInput) {
         if (helper.incomingInput.length === 0) return;
 
-        if (helperInput[0] & 2 !== 0) {     // if odd
+        if (helperInput[0] % 2 !== 0) {     // if odd
             result.push(helperInput[0]);    // put into result
         }
 
@@ -1298,5 +1298,168 @@ function collectOddValues (arr) {
 
 
 */
+
+
+// Recursive functions : example 5 - Pure recursion pattern - collectOddValues
+/*
+
+// the function itself is self-contained and recursive i.e has its array
+
+function collectOddValues (arr) {
+
+    let newArr = [];
+
+    if (arr.length === 0) {
+        return newArr;
+    }
+
+    if (arr[0] % 2 !== 0) {
+        newArr.push(arr[0])
+    }
+
+    newArr = newArr.concat(collectOddValues(arr.slice(1)));
+    return newArr;
+
+}
+
+*/
+
+
+// Assignment 1 / Recursive functions - power
+/*
+// power(2,0) // 1
+// power(2,2) // 4
+// power(2,4) // 16
+
+function power (n, e) {
+
+    if (e === 0) return 1;
+
+    let m = e;  // a copy of the exponential not needed
+                                //2,3 given
+    return n*(power(n,m-1));    //2,2    
+                // *n           //2,1
+                    // *n       //2,0
+
+}
+
+console.log(power(2,3));
+
+*/
+
+
+// Assignment 2 / Recursive functions - factorial
+/*
+function factorial (n) {
+
+    if (num === 1 || num === 0){return 1}   // or conditional to avoid stack error
+
+    return n*factorial(n-1);
+}
+
+
+console.log(factorial(7));
+
+*/
+
+// Assignment 3 / Recursive functions - productOfArray
+/*
+// productOfArray([1,2,3]) // 6
+// productOfArray([1,2,3,10]) // 60
+
+function productOfArray (arr) {
+
+    if (arr.length === 1) {
+        return arr[0];
+    } else {
+
+        return arr[0]*(productOfArray(arr.slice(1)))
+    }
+
+
+}
+
+console.log(productOfArray([1,2,3,10]));
+
+*/
+
+// Assignment 4 / Recursive functions - recursiveRange
+/*
+// recursiveRange(6) // 21
+// recursiveRange(10) // 55
+
+function recursiveRange (n) {
+
+    if (n === 0) return 0;
+
+    return n+(recursiveRange(n-1));
+
+}
+
+// console.log(recursiveRange(6));
+
+*/
+
+// Assignment 5 / Recursive functions - fibonacci - my Helper recursion solution
+/*
+
+// pattern 1,1,2,3,5,7,12 where each number after index 1. is the sum of the prev 2 numbers
+function fib (num) {
+
+
+    if (num < 3) return 1;
+
+    let val;
+    function fib2 (newArr, newI) {
+
+        newArr.push(newArr[0]+newArr[1]) //[1,1,2]      //[1,2,3]
+        newArr.shift();                  // [1,2]       //[2,3]
+        newI++;                          // i = 4       // i = 5
+        if (newI === num+1) {
+            val = newArr[1];
+            return;
+        } else {
+            fib2(newArr, newI);
+        }
+
+    }
+
+    fib2([1,1],3);
+    return val;
+
+}
+
+console.log(fib(3));
+
+
+*/
+
+
+// Assignment 5 / Recursive functions - fibonacci - lecture Pure recursion solution
+/*
+
+function fib(n){
+    if (n <= 2) return 1;
+    return fib(n-1) + fib(n-2);
+}
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
