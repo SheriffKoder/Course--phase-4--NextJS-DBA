@@ -1448,18 +1448,80 @@ function fib(n){
 */
 
 
+// Assignment 6 / Recursive functions - reverse string
+/*
+function reverse (arr) {
+
+    if (arr.length === 1) return arr[0];
+
+    return arr[arr.length-1].concat(reverse(arr.slice(0, arr.length-1)));
+
+}
+
+console.log(reverse('abcd'));   //dcba
+*/
 
 
+// Assignment 7 / Recursive functions - reverse of string = to original
+/*
+// returns true if the string passed to it is a palindrome 
+// (reads the same forward and backward). Otherwise it returns false.
+// isPalindrome('awesome') // false
+// isPalindrome('foobar') // false
+// isPalindrome('tacocat') // true
+// isPalindrome('amanaplanacanalpanama') // true
+// isPalindrome('amanaplanacanalpandemonium') // false
+
+function isPalindrome (st) {
+
+    const original = st;
+    let i = 0; 
+    // 0,1,2,3 compared to the st's 3,2,1,0
+
+    function checkReverse (st) {
+        // check on equality to the original early
+        if (st[st.length-1] !== original[i]) return false;
+        // base case, will return the reverse string, true gets concatenated ?
+        if (st.length === 1) return st[0];
+        i++;
+
+        return st[st.length-1].concat(checkReverse(st.slice(0, st.length-1)));
+    }
+
+    if (checkReverse(original)) {return true;}
+    else {return false};
 
 
+}
 
 
+console.log(isPalindrome("tacocat"));
+*/
+
+// Assignment 8 / Recursive functions - pass a callback as an argument
+/*
+// accepts an array and callback
+// return true if any element makes the callback return true
+// return false if none returns true
+
+// someRecursive([1,2,3,4], isOdd) // true
+// someRecursive([4,6,8,9], isOdd) // true
+// someRecursive([4,6,8], isOdd) // false
+// someRecursive([4,6,8], val => val > 10); // false
+
+const isOdd = val => val % 2 !== 0;
+
+function someRecursive (arr, callback) {
+    if (callback(arr[arr.length-1])) return true;
+
+    if (arr.length === 1) return false;
+
+    return someRecursive(arr.slice(0, arr.length-1), callback);
 
 
+}
 
+console.log(someRecursive([4,6,8], isOdd));
 
-
-
-
-
+*/
 
