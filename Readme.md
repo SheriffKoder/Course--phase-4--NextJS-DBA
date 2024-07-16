@@ -104,6 +104,22 @@ while @latest display the same latest news cards
 - and the submit server action component at @actions/posts.js is the function responsible for handling the post submission, receiving form inputs passed from the useFormState, checks them, returns error messages, store images to the cloudinary api, then stores the post in the sql-lite database and redirects the page
 - use the useOptimistic hook to invert the like status of the post and the like button style and return the updated posts, this functionality is triggered by the like button itself with the help of .bind method
 
+
+## **`Messages Project`*
+>**section7-njs-messages-caching**
+- **Next.js cache control**
+- **Request memoization**
+- **Data caching:** updating the fetch config object with 'cache' and 'next' options
+- The 'dynamic' function
+- Use unstable_noStore next/cache function
+- Using revalidatePath to allow to drop the cached data for new data to come in
+- Using revalidateTag which relates to the tags set in the 'next' option in the fetch config to allow cache drop
+- **Full route caching** for non-dynamic pages, production mode check
+- Exploring other ways of fetching data (local sql-lite database)
+- Set/control cache on local databases using react's cache and next.js's unstable_cache where we can use also revalidatePath and revalidateTag
+
+
+
 ## **Algorithms and Data Structures**
 
 
@@ -119,7 +135,7 @@ while @latest display the same latest news cards
 - Objects
 - Arrays
 
-`Algorithms and Problem Solving Patterns`
+## **`Algorithms and Problem Solving Patterns`**
 - What is an algorithm and how to improve at solving algorithm
 - **Problem solving strategies**
 - (1) Understanding the problem
@@ -140,3 +156,20 @@ while @latest display the same latest news cards
 - Assignment on previous concepts: #4 isSubsequence
 - Assignment on previous concepts: #5 maxSubarraySum
 - Assignment on previous concepts: #6 window sliders / minSubArrayLen
+- Assignment on previous concepts: #7 window sliders / findLongestSubstring
+
+## **`Recursion`**
+- Recursive functions : example 1
+- Recursive functions : example 2 - returning
+- Recursive functions : example 3 - factorial
+- Recursive functions : example 4 - Helper recursion pattern - collectOddValues
+- Recursive functions : example 5 - Pure recursion pattern - collectOddValues
+- Assignment on Recursive functions #1 - power
+- Assignment on Recursive functions #2 - factorial
+- Assignment on Recursive functions #3 - productOfArray
+- Assignment on Recursive functions #4 - recursiveRange
+- Assignment on Recursive functions #5 - fibonacci - Helper recursion pattern
+- Assignment on Recursive functions #5 - fibonacci - Pure recursion solution (lecture)
+- Assignment on Recursive functions #6 - reverse string
+- Assignment on Recursive functions #7 - reversed string read the same as original check
+- Assignment on Recursive functions #8 - pass a callback as an argument
