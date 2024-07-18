@@ -1448,6 +1448,8 @@ function fib(n){
 */
 
 
+
+
 // Assignment 6 / Recursive functions - reverse string
 /*
 function reverse (arr) {
@@ -1461,8 +1463,7 @@ function reverse (arr) {
 console.log(reverse('abcd'));   //dcba
 */
 
-
-// Assignment 7 / Recursive functions - reverse of string = to original
+// Assignment 7 / Recursive functions - isPalindrome reverse of string = to original
 /*
 // returns true if the string passed to it is a palindrome 
 // (reads the same forward and backward). Otherwise it returns false.
@@ -1498,6 +1499,9 @@ function isPalindrome (st) {
 console.log(isPalindrome("tacocat"));
 */
 
+// Assignment 7 / Recursive functions - isPalindrome lec solution
+
+
 // Assignment 8 / Recursive functions - pass a callback as an argument
 /*
 // accepts an array and callback
@@ -1524,4 +1528,92 @@ function someRecursive (arr, callback) {
 console.log(someRecursive([4,6,8], isOdd));
 
 */
+
+
+
+
+// Assignment 9 / Recursive functions - flatten an array
+/*
+function flatten (arr) {
+
+    let result = [];
+
+
+    function flattenA (a) {
+    
+    
+        // go through each element in the passed array until it end
+        for (let i=0; i<a.length; i++) {
+    
+            // if this element is a number, concat
+            if (!a[i].length) {
+                console.log("//1", a[i], a, result);
+                result.push(a[i]);
+            }
+    
+            // if it is an array, repeat the check with this array element
+            // so we will go through each element in this array until it ends
+            // if it is a number, push.. if it is an array
+            // we will go through each element in this array until it ends
+            // if it is a number, push.. if it is an array.. repeat this etc..
+            if (a[i].length > 0) {
+                console.log("//2", a[i], a, result);
+                flattenA(a[i]);
+            }
+    
+        }
+    
+        
+    
+    
+    }
+
+    flattenA(arr);
+    return result;
+
+
+}
+console.log(flatten([1, 2, 3, [4, 5] ]));
+*/
+
+// Assignment 9 / Recursive functions - flatten an array - lec solution
+/*
+function flatten(oldArr){
+    var newArr = []
+        for(var i = 0; i < oldArr.length; i++){
+          if(Array.isArray(oldArr[i])){
+                newArr = newArr.concat(flatten(oldArr[i]))
+            // if not an array
+          } else {
+                newArr.push(oldArr[i])
+          }
+    } 
+    return newArr;
+  }
+*/
+
+// Assignment 10 / Recursive functions - capitalizeFirst
+/*
+function capitalizeFirst (a) {
+    
+
+    // a[0] = a[0]'s first letter capitalized
+    let capital = a[0][0].toUpperCase();
+    a[0] = capital.concat(a[0].slice(1));
+    // if we reached the end and only one element in the array
+    if (a.length === 1) return a[0];
+
+    // otherwise return this capitalized element and repeat for an array without it
+    else return [a[0]].concat(capitalizeFirst(a.slice(1)));
+
+}
+
+console.log(capitalizeFirst(['car','taco','banana'])); // ['Car','Taco','Banana']
+*/
+
+
+
+
+
+
 
