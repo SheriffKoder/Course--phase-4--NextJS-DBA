@@ -17,14 +17,31 @@ import { formatDate } from '@/lib/format';
 import LikeButton from './like-icon';
 import { togglePostLikeStatus } from '@/actions/posts';
 import { useOptimistic } from "react"
+import Image from 'next/image';
 
+
+function imageLoader(config) {
+  // console.log(config.quality);
+  const urlStart = config.src.split("upload/")[0];
+  const urlEnd = config.src.split("upload/")[1];
+  const transformations = `w_200,q_${config.quality}` 
+  // return config.src;
+  return `${urlStart}upload/${transformations}/${urlEnd}`;
+}
 
 
 function Post({ post, action }) {
   return (
     <article className="post">
       <div className="post-image">
-        <img src={post.image} alt={post.title} />
+        <Image 
+        src={post.image} 
+        alt={post.title}
+        width={200}
+        height={120}
+        loader={imageLoader}
+        quality={50}
+        />
       </div>
       <div className="post-content">
         <header>
