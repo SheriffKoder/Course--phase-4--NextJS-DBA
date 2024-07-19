@@ -3,6 +3,12 @@ import { Suspense } from 'react';
 import Posts from '@/components/posts';
 import { getPosts } from '@/lib/posts';
 
+// Static metadata
+export const metadata = {
+  title: "Latest posts",
+  description: "Browse our latest posts"
+}
+
 async function LatestPosts() {
   const latestPosts = await getPosts(2);
   return <Posts posts={latestPosts} />;
