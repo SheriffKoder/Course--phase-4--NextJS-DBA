@@ -1611,9 +1611,263 @@ function capitalizeFirst (a) {
 console.log(capitalizeFirst(['car','taco','banana'])); // ['Car','Taco','Banana']
 */
 
+// Assignment 11 / Recursive functions - nestedEvenSum (result in recursion)
+/*
+// sum of all even numbers in an object which may contain nested objects.
+// learnt how to declare a result in the same recursion and return it
+function nestedEvenSum (obj) {
+
+    let result = 0; //(1)
+
+    // go through each element in the object with its key
+    for (let key in obj) {
+
+        console.log(obj[key]);
+        // check on the element's value
+        // if even add to result
+        if (obj[key] % 2 === 0) {
+            result += obj[key]; //(3)
+        }
+        // if this element is an object
+        // repeat the same process, loop over the object, add or loop again
+        if (typeof(obj[key]) === "object") {
+            console.log("gonna pass", obj[key], result)
+            result = result + nestedEvenSum(obj[key]); //(3)
+        }
+
+        
+    }
+
+    return result; //(2)
+
+}
+
+var obj1 = {
+    outer: 2,
+    obj: {
+      inner: 2,
+      otherObj: {
+        superInner: 2,
+        notANumber: true,
+        alsoNotANumber: "yup"
+      }
+    }
+}   //6
+
+var obj22 = {
+    a: 2,
+    b: {b: 2, bb: {b: 3, bb: {b: 2}}},
+    c: {c: {c: 2}, cc: 'ball', ccc: 5},
+    d: 1,
+    e: {e: {e: 2}, ee: 'car'}
+  };    // 10
+
+// console.log(nestedEvenSum(obj1));  // 10
+
+
+*/
 
 
 
+
+// Assignment 12 / Recursive functions - capitalizeWords
+/*
+function capitalizeWords (ai) {
+
+    // let sti ="";
+    // let result = "";
+
+    // changes each element
+    // for (let i=0; i<ai.length-1; i++) {
+    //     sti= sti+ai[i]+",";
+    // }
+
+
+    // for (let i=0; i<sti.length-1; i++) {
+    //         result = result + sti[i].toUpperCase();
+    // }
+
+    // console.log(result);
+    // return result.split(",");
+
+    // base case
+    // changing factor
+
+    // takes an array, will access the first index in this array
+
+    // capitalize each letter
+    let capitalizedWord = ""
+    for (let i = 0; i<ai[0].length; i++) {
+        capitalizedWord = capitalizedWord + ai[0][i].toUpperCase();
+    }
+    // console.log(capitalizedWord);
+
+    if (ai.length === 1) return capitalizedWord;
+
+    
+    return [capitalizedWord].concat(capitalizeWords(ai.slice(1)));
+
+}
+
+
+
+let words = ['i', 'am', 'learning', 'recursion'];
+// capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
+
+console.log(capitalizeWords(words));
+*/
+
+// Assignment 12 / Recursive functions - capitalizeWords lecture solution
+/*
+
+
+
+function capitalizeWords (array) {
+  if (array.length === 1) {
+    return [array[0].toUpperCase()];
+  }
+  let res = capitalizeWords(array.slice(0, -1));
+  res.push(array.slice(array.length-1)[0].toUpperCase());
+  return res;
+ 
+}
+
+*/
+
+
+
+// Assignment 13 / Recursive functions - stringifyNumbers in nested objects
+/*
+// convert all the numbers in this object and even in nested objects to strings
+// not change the original input object
+function stringifyNumbers (obj) {
+
+    let newObj = {};
+    // check on each element in the obj
+    for (let key in obj) {
+
+        // if it is a number - create in the newObj
+        if (typeof(obj[key]) === "number") {
+            // convert to a string
+            newObj[key] = obj[key]+"";
+        }
+
+        // if it is an object and not an array
+        else if (Object.keys(obj[key]).length && !Array.isArray(obj[key])) {
+            // check this obj also which will be returned as a transformed object
+            newObj[key] = stringifyNumbers(obj[key]);
+        }
+
+        // create in the newObj
+        else {
+            newObj[key] = obj[key];
+        }
+
+
+    }
+
+    // once done looping, return obj
+    return newObj;
+
+
+
+
+}
+
+let objInput = {
+    num: 1,
+    test: [],
+    data: {
+        val: 4,
+        info: {
+            isRight: true,
+            random: 66
+        }
+    }
+}
+
+
+console.log(stringifyNumbers(objInput));
+
+*/
+
+
+// Assignment 14 / Recursive functions - collectStrings from nested objects
+/*
+// a function called collectStrings which accepts an object 
+// and returns an array of all the values in the object that have a typeof string
+
+function collectStrings (obj) {
+
+    let result = [];
+
+    for (let key in obj) {
+
+        // check if it is a string
+        if (typeof(obj[key]) === "string") {
+            result = result.concat([obj[key]]);
+        }
+        if (typeof(obj[key]) === "object") {
+            let x = collectStrings(obj[key]);
+            result = result.concat(x);
+
+        }
+
+    }
+
+    return result;
+
+}
+
+
+const objInput = {
+    stuff: "foo",
+    data: {
+        val: {
+            thing: {
+                info: "bar",
+                moreInfo: {
+                    evenMoreInfo: {
+                        weMadeIt: "baz"
+                    }
+                }
+            }
+        }
+    }
+}
+
+console.log(collectStrings(objInput)) // ["foo", "bar", "baz"]);
+
+*/
+
+
+/////////////////////////////////////////////////////////////////////////
+
+
+
+// Assignment 1 / Searching - linearSearch O(n)
+/*
+// accepts an array and a value
+// loop through the array and check if the current array is equal to the value
+// if it is return the index where it is found
+// else return -1
+
+// best O(1), average O(N), worst O(n)
+// a good solution to unsorted piece of data
+
+function linearSearch (arr, val) {
+
+    for (let i=0; i<arr.length; i++) {
+        if (arr[i] === val) return i; 
+    }
+
+    return -1;
+
+}
+
+
+console.log(linearSearch([10, 15, 20, 25, 30], 15));
+*/
 
 
 
