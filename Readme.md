@@ -103,7 +103,13 @@ while @latest display the same latest news cards
 - which uses @components/form-submit button uses useFormState to display pending if the form submit is in progress (client component hook)
 - and the submit server action component at @actions/posts.js is the function responsible for handling the post submission, receiving form inputs passed from the useFormState, checks them, returns error messages, store images to the cloudinary api, then stores the post in the sql-lite database and redirects the page
 - use the useOptimistic hook to invert the like status of the post and the like button style and return the updated posts, this functionality is triggered by the like button itself with the help of .bind method
-
+- **Image optimizations** @components/posts.js
+- The Image tag with lazy loading, priority, fill, loader, quality props
+- Editing the image by creating a custom url returned from the loader function with integrating the values of the src, quality-prop
+- height/width props and a matching css on the image container and img tag
+- using External image sources
+- Static metadata @layout.js, page.js
+- Dynamic metadata @feed/page.js
 
 ## **`Messages Project`*
 >**section7-njs-messages-caching**
@@ -117,6 +123,16 @@ while @latest display the same latest news cards
 - **Full route caching** for non-dynamic pages, production mode check
 - Exploring other ways of fetching data (local sql-lite database)
 - Set/control cache on local databases using react's cache and next.js's unstable_cache where we can use also revalidatePath and revalidateTag
+- to use run 'npm run dev' and open the backend directory and run 'node app.js'
+
+## **`Fitness user authentication Project`*
+>**section7-njs-authentication-fitness**
+- **Create a user with sql-lite**
+- use the @actions/auth-actions.js to get, validate data from the form component by using it in the useFormState
+- return error messages from @actions/auth-actions.js to be used in the form
+- store the new user in the database in @actions/auth-actions.js using @lib/user.js
+- use @util/hash.js to hash and verify passwords
+- use try/catch at @actions/auth-actions.js to catch user creation errors thrown from the database to return to the form and be displayed to the user
 
 
 
@@ -173,3 +189,11 @@ while @latest display the same latest news cards
 - Assignment on Recursive functions #6 - reverse string
 - Assignment on Recursive functions #7 - reversed string read the same as original check
 - Assignment on Recursive functions #8 - pass a callback as an argument
+- Assignment on Recursive functions #9 - flatten array
+- Assignment on Recursive functions #9 - flatten array - lecture solution
+- Assignment on Recursive functions #10 - capitalize first
+- Assignment on Recursive functions #11 - nestedEvenSum Pure recursion
+- Assignment on Recursive functions #12 - capitalizeWords
+- Assignment on Recursive functions #12 - capitalizeWords lecture solution
+- Assignment on Recursive functions #13 - stringifyNumbers in nested objects
+- Assignment on Recursive functions #14 - collectStrings from nested objects
