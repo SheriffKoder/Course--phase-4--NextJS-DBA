@@ -1870,4 +1870,97 @@ console.log(linearSearch([10, 15, 20, 25, 30], 15));
 */
 
 
+// Assignment 2 / Searching - Binary Search O(LogN)
+/*
+function BinarySearch (arr, val) {
+// function accepts a sorted array and a value
+// create a left pointer at the start of the array
+// create a right pointer at the end of the array
+// while the left pointer comes before the right pointer
+// 1. create a pointer at the middle
+// 2. if found your value, return the index
+// 3. if value is to small, move the left pointer up
+// 4. if value is too large, move the right pointer down
+// if you never found the value return -1
+
+    let start = 0;
+    let end = arr.length-1;
+
+    // basic checks
+    if (val > arr[end] || val < arr[start]) return -1;
+    if (val === arr[end]) {return end}
+    if (val === arr[start]) {return start}
+
+
+    // if passed basic checks look for the number
+    while (start <= end) {
+        let middle = Math.floor((start+end)/2);
+        if (val > arr[middle]) {
+            start = middle+1;
+        } else if ( val < arr[middle]) {
+            end = middle-1;
+        } else if (val == arr[middle]){
+            return middle;
+        }
+    }
+
+    // if we looked and did not find a match, return -1
+    return -1;
+
+
+
+}
+
+
+console.log(BinarySearch([0,1,2,4,5,6], 2));
+*/
+
+
+// Example - Searching - searchSubString : search for substring number of occurrences
+/*
+// loop over the longer string
+// loop over the shorter string
+// if the characters do not match, break out of the inner loop
+// if the characters do match, keep going
+// if you complete the inner loop and found a match, increment the count of matches
+// return count
+
+// w o w o m g z o m g
+//   o m g
+
+function searchSubString (long, short) {
+    let count = 0;
+
+    for (let i=0; i<long.length; i++) {
+        for (let j=0; j<short.length; j++) {
+            console.log(long[i+j],short[j]);
+            if (long[i+j] !== short[j]) {
+                console.log("break!")
+                break;
+                
+            }
+            if (j===short.length-1) {
+                count++;
+            }
+        }
+    }
+
+    return count;
+ 
+}
+
+
+console.log(searchSubString("lolrie loled", "lol"));
+*/
+
+
+
+
+
+
+
+
+
+
+
 
