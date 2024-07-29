@@ -1955,7 +1955,72 @@ console.log(searchSubString("lolrie loled", "lol"));
 
 
 
+// Assignment #1 - Searching - basic solution
+/*
 
+function sortArr (arr) {
+
+
+    for (let i=0; i<arr.length; i++) {
+   
+
+
+        // i = 4;
+        // set the smallest
+        smallest = arr[i];
+        smallestIndex = i
+        // find the the next smallest, replace if smaller
+        for (let j=i; j<arr.length; j++) {
+            if (arr[j] < smallest) {
+                smallest = arr[j];
+                smallestIndex = j;
+            }
+        }
+    
+        temp = 0;
+        temp = arr[i];
+        arr[i] = arr[smallestIndex];
+        arr[smallestIndex] = temp;
+    
+        console.log(smallest);
+        console.log(arr);
+
+        // move forward again
+    }
+
+
+}
+
+// console.log(sortArr([43,63,12,5,36,3]));
+*/
+
+
+// Example - Searching - bubbleSort
+// bubble sort - swap first/second and move forward length-1 times
+/*
+function bubbleSort (arr) {
+
+    // relate i to j for more optimization
+    // not to repeat comparisons
+    for (let i=arr.length; i>0; i--) {
+        for (let j=0; j<i-1; j++) {
+            console.log(arr, i);
+
+            if (arr[j] > arr[j+1]) {
+                let temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;    
+            }
+        }
+    }
+
+    return arr;
+}
+
+
+
+console.log(bubbleSort([43,63,12,5,36,3]));
+*/
 
 
 
