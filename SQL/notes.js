@@ -159,7 +159,7 @@ this means the last operation will run first
 
 
 for readability
-can use lower case syntax
+can use upper case syntax
 the ; donates the end of a query
 
 you may receive tha data in different order depending on the operating system
@@ -280,7 +280,7 @@ WHERE length <= 50
 ////////////////////////////////////////////////////////////////////////////
 ////// WHERE ////// conditional select
 /*
-SELECT and WHERE are the most fundamental SQL statments
+SELECT and WHERE are the most fundamental SQL statements
 
 allows to specify conditions on columns for the rows to be returned
 
@@ -575,11 +575,11 @@ can use multiple _ after each other
 
 // Get all "Mission Impossible X" films
 // Mission Impossible 1 // Mission Impossible 2
-WHERE title like 'Mission Impossible _'     
+WHERE title LIKE 'Mission Impossible _'     
 
 // Get all "paper types"
 // Type #A4 // Type #A3
-WHERE type like 'Type #__'     
+WHERE type LIKE 'Type #__'     
 
 // starts with any single character then 'her' then any sequence of chars
 WHERE name LIKE '_her%'
@@ -720,7 +720,7 @@ GROUP BY category_col
 // AGG(col_name) like SUM AVG etc.
 the AGG col not need to appear in the 'GROUP BY' and 'WHERE IN' statements
 the HAVING statements can be used to filter these AGG cols
-but the SELECTED cols should appear in the 'GROUP BY'
+but the SELECT cols should appear in the 'GROUP BY'
 
 if using ORDER BY on the AGG col, ORDER BY AGG(data_col) for example
 and ORDER comes last in the line statement
@@ -762,14 +762,14 @@ GROUP BY rating,rental_rate
 ORDER BY SUM(replacement_cost)
 LIMIT 5
 
-// how many payments/amounts paid did each customer made
+// how many payments/amounts paid did each customer make
 // and order these amounts count
 SELECT customer_id, COUNT(amount) FROM payment
 GROUP BY customer_id
 ORDER BY COUNT(amount) DESC
 
 
-// how many payments/amounts paid did each customer made and with each staff member
+// how many payments/amounts paid did each customer make and with each staff member
 // and order by the customer/staff together
 SELECT customer_id,staff_id, COUNT(amount) FROM payment
 GROUP BY customer_id,staff_id
@@ -829,7 +829,7 @@ LIMIT 5
 allows to filter like WHERE "after" an AGG aggregation has taken place
 in a GROUP BY case
 
-// for example this query will grouping ratings each having groups of rental rate
+// for example this query will group ratings each having groups of rental rate
 // each of the rental rates have the SUM of the cost
 // trying to filter the cost out will not work
 SELECT rating,rental_rate,SUM(replacement_cost) FROM film
@@ -976,7 +976,7 @@ HAVING SUM(amount) > 130
 
 
 ////////////////////////////////////////////////////////////////////////////
-////// INNER JOIN
+////// INNER JOIN - intersection between tables
 /*
 
 // Explanation
@@ -1046,7 +1046,92 @@ WHERE payment_id = 17503
 
 ////////////////////////////////////////////////////////////////////////////
 ////// OUTER JOIN
+
+
+// how to deal with values only present in one of the tables being joined
+
+
+// FULL OUTER JOIN - grab every single row present in every single table
 /*
+grab everything whether it is present in both tables or only one table
+fill the differences with null*
+
+SELECT * FROM TableB
+FULL OUTER JOIN TableA
+ON TableA.col_match = TableB.col_match
+
+
+*/
+
+
+// FULL OUTER JOIN WHERE IS null - inverse of intersection between tables (not union)
+/*
+// Grab rows that are unique to tableA or unique to tableB
+// i.e not present in the other
+
+SELECT * FROM TableA
+FULL OUTER JOIN TableB
+ON TableA.col_match = TableB.col_match
+WHERE TableA.id IS null
+OR TableB.id IS null
+
+
+// Ex. find a customer who never made a payment
+// make sure that we do not have any payment information 
+// that is not attached to a customer
+// OR that we do not have any customer information 
+// that is not attached to any payments
+
+SELECT * from customer
+FULL OUTER JOIN payment
+ON customer.customer_id = payment.customer_id
+WHERE customer.customer_id IS null
+OR payment.payment_id IS null
+
+
+*/
+
+// LEFT OUTER JOIN - grab all entries of the left table that can also be present in the right
+// all left with also same in right, order matters
+/*
+
+results in the set of records that are in the left table
+if no match with the right table, the results are null
+
+return all the cols in the left col
+any in the right col not in the left will be left-out
+
+
+order does matter here so..
+the left table here will be TableA
+LEFT JOIN or LEFT OUTER JOIN
+
+SELECT * FROM TableA
+LEFT OUTER JOIN TableB
+ON TableA.col_match = TableB.col_match
+
+
+*/
+
+
+// LEFT OUTER JOIN WHERE IS null - grab all entries "unique" to the left table
+// in left but not in right
+/*
+
+SELECT * FROM TableA
+LEFT OUTER JOIN TableB
+ON TableA.col = TableB_col
+WHERE TableB.id IS null
+
+// EX 
+// so any returned here will be films but not in the inventory
+
+SELECT film.film_id, title, inventory_id
+FROM film
+LEFT JOIN inventory 
+ON inventory.film_id = film.film_id
+WHERE inventory.film_id IS NULL
+
 
 
 
@@ -1054,6 +1139,100 @@ WHERE payment_id = 17503
 
 */
 
+
+// opposite to LEFT JOIN table ordering
+// RIGHT OUTER JOIN or RIGHT JOIN - grab all entries of the right table that can also be present in the left
+// all right with also same in left, order matters
+
+// RIGHT OUTER JOIN WHERE IS null - grab all entries "unique" to the right table
+// in right but not in left
+
+
+// UNION - stack statements together
+/*
+
+combine the result of two or more select statements
+
+they should be logical and similar to each other to be combined together
+
+// grab the result of the first query and put it on top of the second query
+SELECT * FROM results_1
+UNION
+SELECT * FROM results_2
+
+
+
+
+
+
+
+*/
+
+
+// JOIN Challenges
+/*
+
+// Example 1
+// What are the emails of the customers who live in california
+in customers table we have address_id
+in address table we have address_id and california as a district col
+
+we can get the intersection between both tables by the address_id
+
+SELECT * from customer
+INNER JOIN address
+ON customer.address_id = address.address_id
+
+we want the customers with district california in the address table
+
+SELECT * from customer
+INNER JOIN address
+ON customer.address_id = address.address_id
+WHERE address.district = 'California'
+
+then we need only the email of the customers
+
+SELECT customer.email,address.district from customer
+INNER JOIN address
+ON customer.address_id = address.address_id
+WHERE address.district = 'California'
+
+we can use just email and district directly as they are unique to each table
+
+
+// Example 2
+
+a customer walk in and is a huge fan of the actor nick wahlberg
+and wants to know which movies he is in
+get a list of all the movies "Nick Wahlberg" has been in
+
+1) so the actor table has actor_id, first_name, last_name
+2) film has film_id
+3) film_actor has actor_id, film_id
+
+so we have some intersections intersection
+
+we want movie names
+we can get the title from line 2,3
+then we can combine with line 1 again
+
+// three tables JOIN
+SELECT title, actor.first_name, actor.last_name FROM film
+INNER JOIN film_actor
+ON film.film_id = film_actor.film_id
+INNER JOIN actor
+ON film_actor.actor_id = actor.actor_id
+WHERE actor.first_name = 'Nick'
+AND actor.last_name = 'Wahlberg'
+
+
+
+
+
+
+
+
+*/
 
 
 
@@ -1068,18 +1247,9 @@ Solution:
 
 
 Git
-Solve challenges and learn new commands in SELECT, GROUP, JOIN
 
-= Solve some examples, solve General challenges #1 and Assessment test #1
-= Work on the following commands
-- WHERE BETWEEN
-- WHERE IN
-- LIKE / ILIKE
-- Aggregate functions
-- GROUP BY
-- HAVING
-- AS clause
-- INNER JOIN
+
+
 
 
 */
