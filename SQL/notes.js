@@ -1235,6 +1235,238 @@ AND actor.last_name = 'Wahlberg'
 */
 
 
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+////// Section 6: Advanced SQL Commands
+
+// Timestamps and Extract - Part 1 current time information
+/*
+
+useful when creating our own tables and databases
+
+TIME : contains only time
+DATE : contains only date
+TIMESTAMP : contains date and time
+TIMESTAMPTZ : contains date, time and timezone
+
+careful considerations should be made when designing a table
+and database and choosing a time data type.
+
+may not need to use TIMESTAMPTZ in most situations
+
+you can always remove historical information, but you can't add it
+if you are using some time you cant just change it to another type later
+or remove it then try to add it again
+think long term when choosing
+
+// functions and operations related to these specific data types
+// useful when creating tables or letting tables automatically populate entries
+TIMEZONE
+NOW
+TIMEOFDAY
+CURRENT_TIME
+CURRENT_DATE
+
+SHOW ALL 
+SHOW TIMEZONE       // location
+
+SELECT NOW()         // current time stamp with GMT
+SELECT TIMEOFDAY()   // Sat Aug 10 00:00:00....
+SELECT CURRENT_TIME  // 00:00:00....
+SELECT CURRENT_DATE  // 2024-08-10
+
+
+*/
+
+
+
+// Timestamps and Extract - Part 2 extracting time and date information, and formatting it
+/*
+
+
+extracting information from a time based data type:
+
+// EXTRACT() a sub component of a date value
+year, month, day, week, quarter
+EXTRACT(YEAR FROM date_col)
+
+SELECT EXTRACT(YEAR FROM payment_date) AS my_year FROM payment 
+
+
+
+
+
+// AGE()
+calculates and returns the current age of given a timestamp in the database
+AGE(date_col)   // returns 13 years 1 mon 5 days 00:00...
+
+SELECT AGE(payment_date) FROM payment 
+
+
+
+// TO_CHAR() - useful for formatting date according to your application requirement
+convert data types to text, useful for timestamp formatting
+TO_CHAR(date_col, 'mm-dd-yyyy') col and the text formatting you want
+
+https://www.postgresql.org/docs/current/functions-formatting.html
+combine patterns with anything you want in between
+
+SELECT TO_CHAR(payment_date, 'mon/yy') FROM payment // feb/07
+
+This is a note in regards to the next lecture, we've gotten a 
+lot of questions of why TO_CHAR "doesn't work" for one of the assessment 
+questions. It actually does work, but you need to realize certain codes 
+are "blank padded to 9 characters", which means instead of returning 
+'Monday' it returns 'Monday   ' with extra spaces to fill up at least 
+9 spaces.
+
+
+
+
+
+// EX
+during which months did payments occur
+format your answer to return back the full month name
+
+SELECT TO_CHAR(payment_date, 'MONTH') FROM payment
+GROUP BY TO_CHAR(payment_date, 'MONTH')
+
+or can use DISTINCT(TO_CHAR..) instead of GROUP
+
+
+// EX
+How many payments occurred on a monday
+
+SELECT COUNT(TO_CHAR(payment_date, 'day')) FROM payment
+WHERE TO_CHAR(payment_date, 'day') LIKE '%monday%'
+
+or
+SELECT COUNT(*) FROM payment
+WHERE EXTRACT(dow FROM payment_date) = 1
+
+where dow has sunday as 0, monday as 1
+
+
+
+
+*/
+
+
+// Mathematical functions and operators - perform maths on the returned
+/*
+
+
+https://www.postgresql.org/docs/9.5/functions-math.html
+
+// calculate some percentage
+SELECT ROUND(rental_rate/replacement_cost, 2)*100 
+AS percent_cost
+FROM film
+
+
+*/
+
+
+// String functions and operators - return a manipulated string
+/*
+
+https://www.postgresql.org/docs/9.1/functions-string.html
+
+
+SELECT LENGTH(first_name) from customer
+
+SELECT first_name || ' ' || last_name from customer     // returns 'John Smith'
+
+SELECT upper(first_name || ' ' || last_name) from customer // returns 'JOHN SMITH'
+
+
+// EX
+SELECT LOWER(left(first_name,1)) || LOWER(last_name) || '@gmail.com'
+AS custom_email
+FROM customer
+
+
+
+
+
+
+
+
+*/
+
+
+// SubQuery - use a statement within a statement
+/*
+
+a sub query allows to construct complex queries,
+performing a query on the results of another query
+
+the syntax involves two SELECT statements
+
+Standard Query
+SELECT student,grade
+FROM test_scores
+
+// get the average grade, then compare the rest of the table against it.
+
+SELECT student,grade FROM test_scores
+WHERE grade > (SELECT AVG(grade) FROM test_scores)
+
+the code within the parenthesis will run first
+
+// when returning multiple values, use the WHERE IN
+// very similar to a JOIN 
+SELECT student,grade FROM test_scores
+WHERE student IN (SELECT FROM honor_roll_table)
+
+// EX
+SELECT title,rental_rate
+FROM film
+WHERE rental_rate > (SELECT AVG(rental_rate) FROM film)
+
+
+// EX
+// get the film titles that have been returned within certain dates
+
+SELECT film_id,title FROM film
+WHERE film_id IN
+(SELECT inventory.film_id FROM rental
+INNER JOIN inventory ON inventory.inventory_id = rental.inventory_id
+WHERE rental.return_date BETWEEN '2005-05-29' AND '2005-05-30')
+
+
+*/
+
+
+// SubQuery EXISTS - test for existence of rows in a sub query exclude/include
+/*
+
+
+used to test for existence of rows in a sub query
+returns true/false depending on the condition
+
+SELECT col FROM table
+WHERE EXISTS(SELECT col FROM table WHERE condition)
+
+
+// return the first,last names for
+// customers who have not made any payment > 11
+SELECT first_name,last_name
+FROM customer AS c
+WHERE NOT EXISTS
+(SELECT* FROM payment as p 
+WHERE p.customer_id = c.customer_id
+AND amount > 11)
+
+
+
+
+
+*/
+
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -1244,10 +1476,6 @@ AND actor.last_name = 'Wahlberg'
 Situation:
 Challenge:
 Solution:
-
-
-Git
-
 
 
 
