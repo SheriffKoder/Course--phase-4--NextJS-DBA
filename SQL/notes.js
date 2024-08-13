@@ -112,7 +112,7 @@ password: do the cli password then put it
 
 open localhost > right click databases create database
 
-// import the .tar database
+// to import the .tar database
 right click this new db, restore
 in filename place the file's path /home/sheriffkoder/Downloads/dvdrental.tar
 
@@ -177,6 +177,24 @@ Translate business related question to a sql query
 make sure when you create table or col names in the db
 that they are not SQL names
 if not so, make sure you write the commands in uppercase and not commands in lowercase
+
+
+a database that has tables existing in a "cd schema" not a public schema
+the queries for the FROM tables will have cd.
+in front of them for example
+SELECT * from cd.bookings
+
+// restoring a database
+servers > localhost > databases right click > create
+enter name, save
+right click the created database > restore
+
+path > /home/sheriffkoder/Downloads/exercises.tar
+Data or Restore options activate Pre, data, post
+click restore
+right click the created database > refresh
+now can access exercises > schemas > cd > tables
+right click the created database > query tools
 
 */
 
@@ -1465,9 +1483,176 @@ AND amount > 11)
 
 */
 
+// Self-join - adjacent data from the same table
+/*
+
+a query in which a table is joined to itself.
+useful for comparing values in a column of rows within the same table
+
+can be viewed as a join of two copies of the same table
+no special keyword for a self join
+it is simply a standard JOIN syntax with the same table in both parts.
+it is an INNER JOIN
+
+it is necessary to use an alias for the table
+
+SELECT tableA.col, tableB.col
+FROM table AS tableA
+JOIN table AS tableB
+tableA.some_col = tableB.other_col
+
+// an example would be if we have a table of employees
+where each employee has an emp_id and is sending a report (report_id) "of" the other employee emp_id
+
+emp_id  name    report_id
+1       andrew  2
+2       bob     1
+
+now we want to show the employee name with the recipient name
+
+SELECT emp.name, report.name AS recipient
+FROM employees AS emp
+JOIN employees AS report
+emp.emp_id = report.report_id
+
+
+// EX
+return each film title with each other film title that has the same length but not the same id
+
+SELECT f1.title, f2.title, f1.length
+FROM film as f1
+JOIN film as f2 ON
+f1.film_id != f2.film_id
+AND f1.length = f2.length
 
 
 
+
+
+
+*/
+
+// Assessment Test #2
+/*
+
+// You want to print out a list of all the facilities and their cost to members
+SELECT name, membercost FROM cd.facilities
+
+
+// How can you produce a list of facilities that charge a fee to members
+
+SELECT name, membercost FROM cd.facilities
+WHERE membercost > 0
+
+// How can you produce a list of facilities that charge a fee to members
+and that fee is less than 1/50th of the monthly maintenance cost ?
+Return the facid, facility name, member cost and monthly maintenance of the facilities in question
+
+SELECT facid, name, membercost, monthlymaintenance FROM cd.facilities
+AND membercost > 0
+WHERE membercost < (monthlymaintenance/50)
+
+
+// How can you produce a list of all facilities with the word 'Tennis' in their name?
+
+SELECT * FROM cd.facilities
+WHERE name like '%Tennis%'
+
+// How can you retrieve the details of facilities with ID 1 and 5? Try to do it without using the OR operator.
+
+SELECT * FROM cd.facilities WHERE facid IN (1,5);
+
+
+
+// How can you produce a list of members who joined after 
+// the start of September 2012? Return the memid, surname, firstname, 
+// and joindate of the members in question.
+
+SELECT * FROM cd.members
+WHERE EXTRACT(MONTH FROM joindate) = 9
+AND EXTRACT(YEAR FROM joindate) = 2012
+
+// How can you produce an ordered list of the first 10 surnames 
+// in the members table? The list must not contain duplicates.
+
+SELECT DISTINCT(surname) FROM cd.members
+ORDER BY surname
+LIMIT 10
+
+
+// You'd like to get the signup date of your last member. 
+// How can you retrieve this information?
+
+SELECT joindate FROM cd.members
+ORDER BY joindate DESC
+LIMIT 1
+
+// Produce a count of the number of facilities that have a cost 
+// to guests of 10 or more.
+
+SELECT COUNT(*) FROM cd.facilities
+WHERE guestcost >= 10
+
+
+// EX
+number of slots booked per facility
+in the month september 2021
+output table consisting of facility id and slots
+sorted by the number of slots
+
+
+bookings > slots, memid, bookid, facid
+facilities > facid
+
+SELECT f.facid, SUM(slots) FROM cd.bookings AS b  // output the facid, and number of slots
+INNER JOIN cd.facilities AS f                       // intersection between the two tables
+ON b.facid = f.facid
+WHERE EXTRACT(MONTH from starttime) = 9             // date filter
+GROUP BY f.facid                                    // group facilities
+HAVING SUM(slots) >= 0                            // allow to view the sum of slots for each facility beside the facilities group
+ORDER BY SUM(slots)
+
+
+// EX (built on the prev EX)
+Produce a list of facilities with more than 1000 slots booked. 
+Produce an output table consisting of facility id and total slots, 
+sorted by facility id.
+
+SELECT f.facid, SUM(slots) FROM cd.bookings AS b
+INNER JOIN cd.facilities AS f
+ON b.facid = f.facid
+GROUP BY f.facid
+HAVING SUM(slots) > 1000
+ORDER BY f.facid
+
+
+// EX
+How can you produce a list of the start times for bookings 
+for tennis courts, for the date '2012-09-21'? 
+Return a list of start time and facility name pairings, ordered by the time.
+
+
+SELECT starttime, name FROM cd.bookings AS b
+INNER JOIN cd.facilities AS f
+ON b.facid = f.facid
+WHERE TO_CHAR(starttime, 'yyyy-mm-dd') = '2012-09-21'
+AND name LIKE 'Tennis Court _'
+ORDER BY starttime
+
+
+// How can you produce a list of the start times for bookings by members named 'David Farrell'?
+
+SELECT starttime FROM cd.bookings AS b
+INNER JOIN cd.members AS m
+ON b.memid = m.memid
+WHERE firstname ='David'
+AND surname = 'Farrell'
+
+
+// 6
+
+
+*/
 
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -1476,6 +1661,7 @@ AND amount > 11)
 Situation:
 Challenge:
 Solution:
+
 
 
 
