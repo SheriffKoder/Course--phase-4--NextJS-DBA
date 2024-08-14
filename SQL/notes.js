@@ -1549,8 +1549,8 @@ and that fee is less than 1/50th of the monthly maintenance cost ?
 Return the facid, facility name, member cost and monthly maintenance of the facilities in question
 
 SELECT facid, name, membercost, monthlymaintenance FROM cd.facilities
-AND membercost > 0
 WHERE membercost < (monthlymaintenance/50)
+AND membercost > 0
 
 
 // How can you produce a list of all facilities with the word 'Tennis' in their name?
@@ -1572,6 +1572,10 @@ SELECT * FROM cd.members
 WHERE EXTRACT(MONTH FROM joindate) = 9
 AND EXTRACT(YEAR FROM joindate) = 2012
 
+SELECT memid, surname, firstname, joindate 
+FROM cd.members WHERE joindate >= '2012-09-01';
+
+
 // How can you produce an ordered list of the first 10 surnames 
 // in the members table? The list must not contain duplicates.
 
@@ -1586,6 +1590,9 @@ LIMIT 10
 SELECT joindate FROM cd.members
 ORDER BY joindate DESC
 LIMIT 1
+
+SELECT MAX(joindate) AS latest_signup FROM cd.members;
+
 
 // Produce a count of the number of facilities that have a cost 
 // to guests of 10 or more.
@@ -1612,6 +1619,11 @@ GROUP BY f.facid                                    // group facilities
 HAVING SUM(slots) >= 0                            // allow to view the sum of slots for each facility beside the facilities group
 ORDER BY SUM(slots)
 
+SELECT facid, sum(slots) AS "Total Slots" FROM cd.bookings 
+WHERE starttime >= '2012-09-01' 
+AND starttime < '2012-10-01' GROUP BY facid ORDER BY SUM(slots);
+
+
 
 // EX (built on the prev EX)
 Produce a list of facilities with more than 1000 slots booked. 
@@ -1624,6 +1636,9 @@ ON b.facid = f.facid
 GROUP BY f.facid
 HAVING SUM(slots) > 1000
 ORDER BY f.facid
+
+SELECT facid, sum(slots) AS total_slots FROM cd.bookings 
+GROUP BY facid HAVING SUM(slots) > 1000 ORDER BY facid;
 
 
 // EX
@@ -1639,6 +1654,17 @@ WHERE TO_CHAR(starttime, 'yyyy-mm-dd') = '2012-09-21'
 AND name LIKE 'Tennis Court _'
 ORDER BY starttime
 
+SELECT cd.bookings.starttime AS start, cd.facilities.name 
+AS name 
+FROM cd.facilities 
+INNER JOIN cd.bookings
+ON cd.facilities.facid = cd.bookings.facid 
+WHERE cd.facilities.facid IN (0,1) 
+AND cd.bookings.starttime >= '2012-09-21' 
+AND cd.bookings.starttime < '2012-09-22' 
+ORDER BY cd.bookings.starttime;
+
+
 
 // How can you produce a list of the start times for bookings by members named 'David Farrell'?
 
@@ -1649,10 +1675,155 @@ WHERE firstname ='David'
 AND surname = 'Farrell'
 
 
-// 6
+// lessons learned
+WHERE starttime >= '2012-09-01' 
+WHERE facid IN (1,5);
+
+*/
+
+
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+////// Section 8: Creating databases and tables
+
+// 
+/*
+
+when creating a table we have to choose which datatype each column should hold
+carefully consider which data types should be used for the data to be stored
+take your time to plan for long term storage
+easier to record more information that to limit yourself forward
+
+
+Boolean: True, false
+Character: char, varchar and text
+Numeric: integer and floating-point number
+Temporal: date, time, timestamp and interval
+
+UUID: universal unique identifiers
+algorithmic unique code to make sure you have the correct identifier
+
+Array: stores an array of strings, numbers, etc
+JSON
+Hstore key-value pair
+Special types such as network address and geometric data
+
+
+// Ex storing a phone number
+what type of numeric ?
+checking the docs will find that bigint is suitable
+however as we will not use phone numbers for arithmetic calculations
+and leading 0's can cause issues
+we can use VARCHAR data type instead
+
+search for best practices online
+how to store a phone number in sql will help you
+
+
+
+
 
 
 */
+
+// Primary keys [PK] and foreign keys - unique id's and references
+/*
+
+is a column or a group of columns used to identify a row uniquely in a table
+every row must have an entry with a custom id that is unique for every row/customer
+
+the way you define them when you are constructing your table
+is that you set them up as a constraint
+
+
+for example in the dvdrental database
+we saw customers had a unique, non-null customer_id column as their primary key.
+
+primary keys are also important since they allow us to easily discern
+what columns should be used for joining tables together
+
+// foreign keys
+a field or group of fields in a table (referencing table/child table)
+that uniquely identifies a row in another table (referenced table/parent table)
+references to the primary key of another table
+
+payment table
+payment_id (primary key)
+customer_id (foreign key) since it references the customer table's primary key
+
+SQL wont tell you if this is a foreign key unless..
+
+if you opened Tables > payment > constraints 
+you will find [PK]'s as golden keys
+and dual grey keys as foreign keys
+
+to know the relation of the foreign key
+click on it then go to the dependencies tab
+will find it is referring to public.customer.customer_id normal (which is the parent)
+
+or right click > properties > columns
+
+
+
+
+*/
+
+// Constraints keywords
+/*
+
+constraints are the rules enforced on data columns on table
+used to prevent invalid data from being entered into the database
+this ensures the accuracy and reliability of the data in the database
+
+Column constraints, certain conditions to the data in a column
+Table constraints, applied to the entire table rather an individual column
+
+// Column Constraints:
+NOT NULL : ensures that a column cannot have a NULL value, 
+has to include a value.
+
+UNIQUE : ensures all values in a column are different
+
+
+PRIMARY Key : 
+uniquely identifies each row/record in a database table.
+
+FOREIGN Key :
+constrains data based on columns in other tables
+
+CHECK :
+ensures that all values in a column satisfy certain conditions
+
+EXCLUSION :
+ensures that if any two rows are compared on the specified column
+or expression using the specified operator, not all of these comparisons
+will return TRUE.
+
+
+// Table Constraints
+CHECK (condition) :
+check a condition when inserting or updating data.
+
+REFERENCES :
+constrains the value stored in the column that must exist in a column
+in another table.
+
+UNIQUE (column_list) :
+forces the values stored in the columns listed inside the parentheses to be unique
+sets unique for multiple columns
+
+PRIMARY KEY(column_list)
+Allows you to define the primary key that consists of multiple columns.
+multiple columns of primary keys per table
+
+
+
+
+
+*/
+
+
 
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -1661,6 +1832,10 @@ AND surname = 'Farrell'
 Situation:
 Challenge:
 Solution:
+
+
+Git
+
 
 
 
