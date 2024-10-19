@@ -140,6 +140,7 @@ query history where you can copy the query to the main editor
 below the data output, messages, notifications
 and download icon (to .csv)
 
+left menu
 drop-down open
 database > schemas > public > tables
 
@@ -533,7 +534,7 @@ WHERE payment_date BETWEEN '2007-02-01' AND '2007-02-15'
 
 
 ////////////////////////////////////////////////////////////////////////////
-////// WHERE (NOT) IN ////// similar to WHERE col=x AND col=y 
+////// WHERE (NOT) IN ////// defined, like where first_name IS jared
 /*
 
 when want to check for multiple possible value options
@@ -708,6 +709,7 @@ SELECT ROUND(SUM(replacement_cost),2) FROM film;
 
 ////////////////////////////////////////////////////////////////////////////
 ////// Group by (part 1), categorizing,  placed at end after WHERE
+// allows another column to be returned beside the AGG function result
 /*
 
 allows us to aggregate columns per some category
@@ -841,7 +843,8 @@ LIMIT 5
 
 
 ////////////////////////////////////////////////////////////////////////////
-////// HAVING filter the GROUP BY AGG() result 
+////// HAVING filter the GROUP BY AGG() result
+// preferred for filtering AGG
 /*
 
 allows to filter like WHERE "after" an AGG aggregation has taken place
@@ -1256,7 +1259,7 @@ AND actor.last_name = 'Wahlberg'
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
-////// Section 6: Advanced SQL Commands
+////// Section 6: Useful SQL Commands
 
 // Timestamps and Extract - Part 1 current time information
 /*
@@ -1687,7 +1690,7 @@ WHERE facid IN (1,5);
 ////////////////////////////////////////////////////////////////////////////
 ////// Section 8: Creating databases and tables
 
-// 
+// Types
 /*
 
 when creating a table we have to choose which datatype each column should hold
@@ -1759,10 +1762,12 @@ you will find [PK]'s as golden keys
 and dual grey keys as foreign keys
 
 to know the relation of the foreign key
-click on it then go to the dependencies tab
+right click > properties > columns
+
+or click on it then go to the dependencies tab
 will find it is referring to public.customer.customer_id normal (which is the parent)
 
-or right click > properties > columns
+
 
 
 
@@ -1823,6 +1828,190 @@ multiple columns of primary keys per table
 
 */
 
+// Create table
+/*
+
+you can use CREATE TABLE once
+
+// Full general syntax
+
+CREATE TABLE table_name (
+    column_name TYPE column_constraint,
+    column_name TYPE column_constraint,
+    table_constraint table constraint
+) INHERITS other_table_name;
+
+
+// Common simple syntax
+
+CREATE TABLE table_name (
+    column_name TYPE column_constraint,
+    column_name TYPE column_constraint,
+)
+
+CREATE TABLE players (
+    player_id SERIAL PRIMARY KEY,
+    age SMALLINT NOT NULL,          // must enter a value here
+)
+
+
+SERIAL:
+integer that gets incremented when adding more row inserts
+upon row deletion, the serials stay the same
+
+
+//// EX Create a database
+close the dvdrental tab and its query editor
+left menu > right click > create database
+enter the name and save
+right click the new database and refresh then open the query editor
+
+CREATE TABLE account (
+	user_id SERIAL PRIMARY KEY,
+	username VARCHAR(50) UNIQUE NOT NULL,
+	password VARCHAR(50) NOT NULL,
+	email VARCHAR(250) UNIQUE NOT NULL,
+	created_on TIMESTAMP NOT NULL,
+	last_login TIMESTAMP
+)
+
+CREATE TABLE job (
+	job_id SERIAL PRIMARY KEY,
+	job_name VARCHAR(200) UNIQUE NOT NULL
+)
+
+
+CREATE TABLE account_job (
+	user_id INTEGER REFERENCES account(user_id), // not a primary key as it is will be a foreign key integer
+	job_id INTEGER REFERENCES job(job_id),
+	hire_date TIMESTAMP
+)
+
+*/
+
+// insert information into the table with INSERT
+/*
+
+add in rows to a table
+
+INSERT INTO table_name (col1, col2) values (val1, val2)
+
+//// EX
+INSERT INTO account(username, password, email,created_on)
+VALUES
+('Jose', 'password', 'jose@email.com', CURRENT_TIMESTAMP)
+
+INSERT INTO job (job_name)
+VALUES ('Developer')
+
+// not have to put the primary key as it is serial
+
+INSERT INTO account_job (user_id, job_id, hire_date)
+VALUES (1,1,CURRENT_TIMESTAMP)
+
+INSERT INTO account_job (user_id, job_id, hire_date)
+VALUES (10,1,CURRENT_TIMESTAMP) // 10 here will not work as we inserted 1 row in account table, no other id numbers
+
+
+
+
+
+
+// inserting values from another table
+INSERT INTO table_name (col1, col2) 
+SELECT col1, col2,
+FROM another_table
+WHERE condition
+
+inserted row values must match up for the table including constraints
+serial columns do not need o be provided a value
+
+
+
+
+*/
+
+// UPDATE
+/*
+
+change values in a col in a table
+we have now tables of account, job, account_job
+
+UPDATE table
+SET column1 = value1, column1 = value2,..
+WHERE condition;
+
+UPDATE account
+SET last_login = CURRENT_TIMESTAMP
+WHERE last_login IS NULL    // if there is a null value in last login, update the current values for time stamp
+
+// set based on another column
+UPDATE account
+SET last_login = created_on
+
+// using another table's values (UPDATE join)
+UPDATE TableA
+SET original_col = TableB.new_col
+FROM tableB
+WHERE tableA.id = TableB.id
+
+// return affected rows from the update, all row or part of it
+UPDATE account
+SET last_login = created_on
+RETURNING account_id, last_login
+
+
+//// EX
+UPDATE account
+SET last_login = CURRENT_TIMESTAMP
+RETURNING last_login
+
+UPDATE account
+SET last_login = created_on
+RETURNING last_login
+
+// update based on the results from another table
+UPDATE account_job
+SET hire_date = account.created_on
+FROM account
+WHERE account_job.user_id = account.user_id
+
+
+
+
+*/
+
+// DELETE
+/*
+
+remove a row from a table
+
+DELETE FROM table_name
+WHERE row_id = 1
+
+// based on the presence in other tables
+DELETE FROM tableA
+USING tableB
+WHERE tableA.id = tableB.id
+
+// delete all the rows
+DELETE FROM job
+
+DELETE FROM job
+WHERE job_name = 'Cowboy'
+
+// can also add a returning command at the end
+// to see the rows removed
+DELETE FROM job
+WHERE job_name = 'Cowboy'
+RETURNING job_id, job_name
+
+
+
+
+
+
+*/
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -1835,8 +2024,11 @@ Solution:
 
 
 Git
-
-
+Revision
+CREATE TABLE
+INSERT
+UPDATE
+DELETE
 
 
 
