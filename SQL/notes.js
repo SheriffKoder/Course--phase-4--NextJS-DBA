@@ -2206,6 +2206,117 @@ INSERT INTO students (
 */
 
 
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+////// Section 10: Conditional Expressions and Operators
+
+// Add logic to our commands using keywords and functions
+
+// CASE - if/else - outputs a new col
+/*
+
+only execute SQL commands when certain conditions are met.
+like if/else in programming
+
+general or case expression
+
+// General
+CASE
+WHEN condition1 THEN result1
+WHEN condition2 THEN result2
+ELSE some_other_result
+END
+
+
+SELECT student_id,
+CASE 
+WHEN student_id = 1 then 'one'
+WHEN student_id = 2 then 'two'
+ELSE 'other'
+END
+FROM students
+
+
+// CASE expression syntax
+// first evaluates an expression then compares the result with each value
+// in the WHEN clauses sequentially
+
+CASE expression
+WHEN value1 THEN result1
+WHEN value2 THEN result2
+ELSE some_other_result
+END
+
+
+SELECT a,
+CASE a
+WHEN 1 THEN 'one'
+WHEN 2 THEN 'two'
+ELSE 'other'
+END
+FROM test;
+
+
+// EX
+// customers who are from the first 100 id's to be of premium status
+// 100-200 to be of the plus status
+// else normal customer
+
+SELECT customer_id from customer
+
+SELECT customer_id, 
+CASE
+WHEN (customer_id <= 100) THEN 'Premium'
+WHEN (customer_id BETWEEN 101 AND 200) THEN 'Plus'
+ELSE 'NORMAL'
+END AS customer_class // rename the output column
+FROM customer
+
+
+// EX, let us say you have customers who won the lottery they have id=2 and 5
+// and you want to label them
+SELECT customer_id,
+CASE customer_id
+WHEN 2 THEN 'Winner'
+WHEN 5 THEN 'Second Place'
+ELSE 'Normal'
+END as lottery_results
+FROM customer
+
+// AGG with CASE
+// EX, want to know how many of 0.99 rental rates we have
+SELECT
+SUM(
+CASE rental_rate
+WHEN 0.99 then 1
+ELSE 0
+END
+) AS number_of_bargains
+FROM film
+
+SELECT
+SUM(CASE rental_rate WHEN 0.99 then 1 ELSE 0 END) AS bargains,
+SUM(CASE rental_rate WHEN 2.99 then 1 ELSE 0 END) AS regular
+FROM film
+
+// challenge
+we want to kow and compare the various amounts of films we have per movie rating
+for each rating return its count
+
+select rating, count(*) from film
+group by rating;
+
+or use the case above manually
+
+
+
+*/
+
+
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
