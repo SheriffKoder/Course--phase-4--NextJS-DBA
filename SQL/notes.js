@@ -1931,7 +1931,7 @@ serial columns do not need o be provided a value
 
 */
 
-// UPDATE
+// UPDATE - edit column values in a row
 /*
 
 change values in a col in a table
@@ -1981,7 +1981,7 @@ WHERE account_job.user_id = account.user_id
 
 */
 
-// DELETE
+// DELETE - rows
 /*
 
 remove a row from a table
@@ -2013,6 +2013,199 @@ RETURNING job_id, job_name
 
 */
 
+// ALTER - more edits to table/column name, constraints, adding cols
+/*
+
+changes to an existing table structure
+adding, dropping or renaming columns
+changing a column's data types
+set DEFAULT values for a column
+add CHECK constraints
+Rename table
+
+// Rename table
+ALTER TABLE table_name
+RENAME TO new_name
+
+// Rename column
+ALTER TABLE table_name
+RENAME COLUMN col_name TO new_col_name
+
+// add column
+ALTER TABLE table_name
+ADD COLUMN new_col data_type
+
+// add constraints to column
+ALTER TABLE table_name
+ALTER COLUMN col_nam
+ADD CONSTRAINT constraint_name
+
+// add/drop default value for the column
+ALTER TABLE table_name
+ALTER COLUMN col_nam
+SET DEFAULT value or DROP DEFAULT
+
+// add/drop not null constraint
+ALTER TABLE table_name
+ALTER COLUMN col_nam
+SET NOT NULL (add a not null constraint)
+
+
+
+
+
+*/
+
+// DROP - remove columns
+/*
+
+completely remove a column from a table
+in PostgreSQL this will also automatically remove all of its indexes
+and constraints involving the column
+
+However, it will not remove columns used in views, triggers, or stored procedures
+without the additional CASCADE clause
+
+
+// remove column
+ALTER TABLE table_name
+DROP COLUMN new_col
+
+// remove column and remove all the dependencies like views, triggers, or stored procedures
+ALTER TABLE table_name
+DROP COLUMN new_col CASCADE
+
+// make sure to remove a col that actually exists
+ALTER TABLE table_name
+DROP COLUMN IF EXISTS col_name
+
+
+// remove multiple cols
+ALTER TABLE table_name
+DROP COLUMN new_col1,
+DROP COLUMN new_col2
+
+
+DROP TABLE students;
+
+
+*/
+
+// CHECK - put input constraints while creating a table
+/*
+
+check constraint allows to create more customized constraints
+that adhere to a certain condition.
+such s making sure all inserted integer values fall below a certain threshold
+
+CREATE TABLE example (
+    ex_id SERIAL PRIMARY KEY,
+    age SMALLINT CHECK (age > 21),
+    parent_age SMALLINT CHECK (parent_age > age)
+);
+
+// EX
+CREATE TABLE employees (
+    emp_id SERIAL PRIMARY KEY,
+    first_name VRCHAR(50) NOT NULL,
+    last_name VRCHAR(50) NOT NULL,
+    birthdate DATE CHECK (birthdate > '1900-01-01'),
+    hire_date DATE CHECK (hire_date > birthdate),
+    salary INTEGER CHECK (salary > 0)
+)
+
+//
+INSERT INTO employees (
+    first_name, last_name, birthdate, hire_date, salary
+)
+VALUES (
+    'Jose', 'Portilla', '1899-11-03', '2010-01-01', 100     // birthdate will yield an error
+)
+
+
+failing insert commands will leave a primary key gap
+
+*/
+
+// Assessment Test #3 - Create table and insert values
+/*
+
+basic types:
+SERIAL PRIMARY KEY
+age > SMALLINT
+username > VARCHAR(50)
+email > VARCHAR(250)
+dates > TIMESTAMP
+number > INTEGER
+
+basic constraints:
+NOT NULL
+UNIQUE
+
+
+// create a database called school
+// two tables, teachers and students
+// students > student_id, first_name,last_name, homeroom_number, phone,email, and graduation year.
+// teachers > teacher_id, first_name, last_name, homeroom_number, department, email, and phone
+
+// constraints
+// must have phone numbers
+// id's as primary key
+// phone numbers and emails must be unique
+// 
+
+
+CREATE TABLE students (
+	student_id SERIAL PRIMARY KEY,
+	first_name VARCHAR(45) NOT NULL,
+	last_name VARCHAR(45) NOT NULL,
+	homeroom_number INTEGER NOT NULL,
+	phone VARCHAR(20) NOT NULL UNIQUE,
+	email VARCHAR(115) UNIQUE,
+	graduation_year INTEGER
+)
+
+
+CREATE TABLE teachers (
+	teacher_id SERIAL PRIMARY KEY,
+	first_name VARCHAR(45) NOT NULL,
+	last_name VARCHAR(45) NOT NULL,
+	homeroom_number INTEGER NOT NULL,
+	department VARCHAR(45) NOT NULL,
+	phone VARCHAR(20) NOT NULL UNIQUE,
+	email VARCHAR(115) UNIQUE
+)
+
+
+// insert a student named 
+Mark Watney
+phone number 777-555-1234
+does not have an email
+graduates 2035
+has 5 as a home room number
+
+INSERT INTO students (
+    first_name, 
+    last_name, 
+    homeroom_number, 
+    phone, 
+    graduation_year
+) VALUES (
+    'Mark',
+    'Watney',
+    5,
+    '777-555-1234',
+    2035
+)
+
+
+
+
+
+
+*/
+
+
 
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -2024,11 +2217,7 @@ Solution:
 
 
 Git
-Revision
-CREATE TABLE
-INSERT
-UPDATE
-DELETE
+
 
 
 
