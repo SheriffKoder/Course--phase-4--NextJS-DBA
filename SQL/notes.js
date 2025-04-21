@@ -125,6 +125,8 @@ then restore
 if got an error this means it might tried to restore twice
 
 now right click the db, refresh
+check by schemas > public > tables
+
 
 right click > query tool
 
@@ -236,7 +238,7 @@ SELECT first_name,last_name,email FROM customer;
 
 
 ////////////////////////////////////////////////////////////////////////////
-////// SELECT DISTINCT ////// unique column
+////// SELECT DISTINCT ////// unique in a column
 /*
 
 when a column has duplicate values
@@ -1067,8 +1069,6 @@ WHERE payment_id = 17503
 
 ////////////////////////////////////////////////////////////////////////////
 ////// OUTER JOIN
-
-
 // how to deal with values only present in one of the tables being joined
 
 
@@ -1889,6 +1889,43 @@ CREATE TABLE account_job (
 
 */
 
+// CHECK - put input constraints while creating a table
+/*
+
+check constraint allows to create more customized constraints
+that adhere to a certain condition.
+such s making sure all inserted integer values fall below a certain threshold
+
+CREATE TABLE example (
+    ex_id SERIAL PRIMARY KEY,
+    age SMALLINT CHECK (age > 21),
+    parent_age SMALLINT CHECK (parent_age > age)
+);
+
+// EX
+CREATE TABLE employees (
+    emp_id SERIAL PRIMARY KEY,
+    first_name VRCHAR(50) NOT NULL,
+    last_name VRCHAR(50) NOT NULL,
+    birthdate DATE CHECK (birthdate > '1900-01-01'),
+    hire_date DATE CHECK (hire_date > birthdate),
+    salary INTEGER CHECK (salary > 0)
+)
+
+//
+INSERT INTO employees (
+    first_name, last_name, birthdate, hire_date, salary
+)
+VALUES (
+    'Jose', 'Portilla', '1899-11-03', '2010-01-01', 100     // birthdate will yield an error
+)
+
+
+failing insert commands will leave a primary key gap
+
+*/
+
+
 // insert information into the table with INSERT
 /*
 
@@ -1912,8 +1949,15 @@ VALUES (1,1,CURRENT_TIMESTAMP)
 INSERT INTO account_job (user_id, job_id, hire_date)
 VALUES (10,1,CURRENT_TIMESTAMP) // 10 here will not work as we inserted 1 row in account table, no other id numbers
 
-
-
+// inserting multiple rows
+INSERT INTO depts (
+first_name,
+department
+)
+Values
+('Lauren', 'A'),
+('Vinton', 'A'),
+('Claire', 'A');
 
 
 
@@ -1981,7 +2025,7 @@ WHERE account_job.user_id = account.user_id
 
 */
 
-// DELETE - rows
+// DELETE - remove rows
 /*
 
 remove a row from a table
@@ -2091,41 +2135,6 @@ DROP TABLE students;
 
 */
 
-// CHECK - put input constraints while creating a table
-/*
-
-check constraint allows to create more customized constraints
-that adhere to a certain condition.
-such s making sure all inserted integer values fall below a certain threshold
-
-CREATE TABLE example (
-    ex_id SERIAL PRIMARY KEY,
-    age SMALLINT CHECK (age > 21),
-    parent_age SMALLINT CHECK (parent_age > age)
-);
-
-// EX
-CREATE TABLE employees (
-    emp_id SERIAL PRIMARY KEY,
-    first_name VRCHAR(50) NOT NULL,
-    last_name VRCHAR(50) NOT NULL,
-    birthdate DATE CHECK (birthdate > '1900-01-01'),
-    hire_date DATE CHECK (hire_date > birthdate),
-    salary INTEGER CHECK (salary > 0)
-)
-
-//
-INSERT INTO employees (
-    first_name, last_name, birthdate, hire_date, salary
-)
-VALUES (
-    'Jose', 'Portilla', '1899-11-03', '2010-01-01', 100     // birthdate will yield an error
-)
-
-
-failing insert commands will leave a primary key gap
-
-*/
 
 // Assessment Test #3 - Create table and insert values
 /*
@@ -2257,6 +2266,14 @@ ELSE 'other'
 END
 FROM test;
 
+// EX - know how many in each department
+SELECT (
+    SUM(CASE WHEN department = 'A' THEN 1 ELSE 0 END) // get all A's
+    /                                                 // Divide
+    SUM(CASE WHEN department = 'B' THEN 1 ELSE 0 END) // get all B's
+) as department_ratio
+FROM depts
+
 
 // EX
 // customers who are from the first 100 id's to be of premium status
@@ -2310,11 +2327,223 @@ group by rating;
 or use the case above manually
 
 
+// Determine a value of a column based on the case
+UPDATE account
+SET password =
+	CASE name
+		WHEN 'value1' THEN 'Winner'
+		WHEN 'value2' THEN 'Second Place'
+		ELSE 'Normal'
+	END;
+
 
 */
 
 
+// COALESCE - masking null values to perform oprations on
+/*
 
+a function that accepts an unlimited number of arguments
+returns the first argument that is not null
+i all arguments are null,
+the function will return null
+
+COALESCE (arg1, arg2, .., argN)
+
+SELECT COALESCE (1,2) //1 as 1 is not null
+SELECT COALESCE (NULL, 2, 3) // 2
+
+useful when querying a table that contains null values
+and substituting it with another value
+
+Item Price Discount
+A   100     20
+B   200     null
+C   300     10
+
+
+// situation
+SELECT item, (price - discount) AS final FROM table
+in final the null will stay null, we want it the same price 200-0 = 0 
+as if no discount
+
+use COALESCE to replace null values to 0 without affecting the original table
+for example 
+SELECT item, (price - COALESCE(discount,0)) AS final FROM table
+if discount is NULL will return 0
+
+
+
+
+
+
+*/
+
+// CAST - return with another data type to perform operations available on this other data type
+/*
+
+The CAST operator let's you convert from one data type into another.
+keep in mind it has to be logical, 
+'5' to integer will work
+'five' to integer will not work
+
+SELECT CAST('5' AS INTEGER)
+SELECT '5'::INTEGER
+
+returns
+---------
+col_name
+integer
+       5
+
+// counting the number of integers for a number
+by changing to string and char_length
+
+SELECT CHAR_LENGTH(CAST(inventory_id AS VARCHAR) FROM rental)
+
+
+
+
+
+*/
+
+// NULLIF - return NULL if 2 values are equal, good for dividing over 0
+/*
+
+The NULLIF function takes in 2 inputs and returns NULL if both are equal,
+otherwise it returns the first argument passed.
+
+NULLIF(arg1, arg2)
+NULLIF(10, 10) // NULL
+NULLIF(10, 12) // 10
+
+useful in cases where a null value would cause an error or unwanted result.
+
+// EX - table
+Lauren  A
+Vinton  A
+Claire  B
+
+// get sum of all people in dept A and divide over all from dept B
+// if there is no people in dept B (0), we will get an error n/0 = error
+SELECT (
+    SUM(CASE WHEN department = 'A' THEN 1 ELSE 0 END) /
+    SUM(CASE WHEN department = 'B' THEN 1 ELSE 0 END)
+) as department_ratio
+FROM depts
+
+SELECT (
+    SUM(CASE WHEN department = 'A' THEN 1 ELSE 0 END) /
+    NULLIF(SUM(CASE WHEN department = 'B' THEN 1 ELSE 0 END),0) // returns null if there is a 0, then n/null = null
+) as department_ratio
+FROM depts
+
+
+
+
+*/
+
+// VIEWS - query alias
+/*
+
+creating a view will display the query as if it is a table already existed.
+
+a database object that is of a stored query.
+acts as a virtual table
+helps not to re-write your query again. makie it accessible with the VIEW keyowrd
+
+you can alter and update existing views
+
+// EX
+CREATE VIEW customer_info AS
+SELECT first_name, last_name, address FROM customer
+INNER JOIN address
+ON customer.address_id = address.address_id
+
+now can use
+SELECT * FROM customer_info
+
+// edit the created VIEW -- add district column
+CREATE OR REPLACE VIEW customer_info AS
+SELECT first_name, last_name, address, district FROM customer
+INNER JOIN address
+ON customer.address_id = address.address_id
+
+
+// remove it
+DROP VIEW IF EXISTS customer_info
+
+// rename it
+ALTER VIEW customer_info RENAME to c_info
+
+
+
+
+
+
+*/
+
+// Importing and Exporting data from pgAdmin
+/*
+
+Import data from a .csv to an already existing table.
+
+the file must be aligned with SQL
+
+SELECT first_name, last_name, address FROM customer
+INNER JOIN address
+ON customer.address_id = address.address_id
+
+must provide 100% correct file path to your outside file
+
+the Import command does not create a table for you from the header names. 
+It assumes a table is already created
+
+// Example
+go to excel, create a table
+download as .csv
+right click on properties and copy the location (path),
+
+go to pgAdmin, select a database and go to the query editor
+make sure the table in pgAdmin align with the .csv table exactly
+
+CREATE TABLE simple (
+a INTEGER
+b INTEGER
+c INTEGER
+)
+
+SELECT * FROM simple    // empty
+
+go to the left tab, right click on the newly created table, click import/export
+Option tab,
+put in the Filename input the location+filename
+header // first row that contains the table header in the csv? yes to not copy the first row again from the csv
+Quote // what strings in the CSV are wrapped with
+columns tab, de-select the columns you do not want/not exist in your table
+click ok
+
+//// Export
+right click table, click import/export, check export, choose columns, 
+specify the misc options to your preferances
+
+
+
+
+
+postgresql.org/docs/12/sql-copy.html
+https://stackoverflow.com/questions/2987433/how-to-import-csv-file-data-into-a-postgresql-table
+https://www.enterprisedb.com/postgres-tutorials/how-import-and-export-data-using-csv-files-postgresql
+https://stackoverflow.com/questions/21018256/can-i-automatically-create-a-table-in-postgresql-from-a-csv-file-with-headers
+
+
+*/
+
+
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+////// Section 11: PosteGreSQL with Python
 
 
 

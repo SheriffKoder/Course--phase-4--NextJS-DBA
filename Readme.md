@@ -197,3 +197,76 @@ while @latest display the same latest news cards
 - Assignment on Recursive functions #12 - capitalizeWords lecture solution
 - Assignment on Recursive functions #13 - stringifyNumbers in nested objects
 - Assignment on Recursive functions #14 - collectStrings from nested objects
+
+## **`Searching`**
+- Searching Example 1 - Linear Search
+- Searching Example 2 - Binary Search
+- Searching Example 3 - searchSubString
+
+## **`Sorting`**
+- Sorting Assignment 1 - basic sort
+- Sorting Example 1 - bubble sort
+
+
+
+# **SQL**
+  
+## **`Section 1`**
+- Introduction
+- PostgreSQL installation
+- pgAdmin installation and setup
+
+>In this part of the course we are using the following SQL commands combined together to display specific data from a dvd-rental store database in PostgreSQL's pgAdmin GUI to provide answers to real life situations
+## **`Section 2`**
+- SELECT
+- SELECT DISTINCT
+- COUNT
+- WHERE (SELECT WHERE)
+- ORDER
+- LIMIT
+- WHERE BETWEEN
+- WHERE IN
+- LIKE / ILIKE
+- General challenges #1
+## **`Section 3: GROUP BY #1`**
+- Aggregate functions
+- GROUP BY
+- HAVING
+- Assessment test #1
+## **`Section 5: JOINS`**
+- AS clause
+- INNER JOIN
+- FULL OUTER JOIN
+- FULL OUTER JOIN WHERE IS null
+- LEFT OUTER JOIN
+- LEFT OUTER JOIN WHERE IS null
+- RIGHT OUTER JOIN
+- RIGHT OUTER JOIN WHERE IS null
+- UNION
+- JOIN Challenges
+## **`Section 6: Advanced SQL Commands`**
+- Timestamps and Extract - Part 1
+- Timestamps and Extract - Part 2
+- Mathematical functions and operators
+- String functions and operators
+- SubQuery
+- SubQuery EXISTS
+- Self joining
+- Assessment test #2
+## **`Section 8: Table creation and editing commands`**
+- CREATE TABLE
+- INSERT
+- UPDATE
+- DELETE
+- ALTER
+- DROP
+- CHECK
+- Assessment test #3
+## **`Section 10: Conditional Expressions and Operators`**
+- CASE
+- COALESCE
+- CAST
+- NULLIF
+- VIEWS
+- Import/Export
+
